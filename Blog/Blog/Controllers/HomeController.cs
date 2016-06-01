@@ -7,10 +7,13 @@ using System.Web.Mvc;
 namespace Blog.Controllers
 {
     public class HomeController : Controller
-    {
+        {
+        /// <summary>
+        /// Метод отвечает за запуск главной страницы
+        /// </summary>
         public ActionResult Index()
         {
-            ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
+           // ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
             return View("Blog/Home");
         }

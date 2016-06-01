@@ -1,7 +1,7 @@
 ﻿@model Blog.Models.LoginModel
 
 @{
-    ViewBag.Title = "Выполнить вход";
+    ViewBag.Title = "Вход";
 }
 
 <hgroup class="title">
@@ -32,7 +32,7 @@
                 @Html.LabelFor(m => m.RememberMe, new { @class = "checkbox" })
             </li>
         </ol>
-        <input type="submit" value="Выполнить вход" />
+        <input type="submit" value="Вход" />
     </fieldset>
     <p>
         @Html.ActionLink("Зарегистрируйтесь", "Register"), если у вас нет учетной записи.
