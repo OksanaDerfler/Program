@@ -301,11 +301,11 @@
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Web.config" />
-    <Content Include="Views\Blog\Home.cshtml" />
-    <Content Include="Views\Blog\Registration.cshtml" />
-    <Content Include="Views\Blog\NewRecord.cshtml" />
-    <Content Include="Views\Blog\Login.cshtml" />
-    <Content Include="Views\Blog\Profile.cshtml" />
+    <Content Include="Views\Home\Blog\Home.cshtml" />
+    <Content Include="Views\Home\Blog\Registration.cshtml" />
+    <Content Include="Views\Home\Blog\NewRecord.cshtml" />
+    <Content Include="Views\Home\Blog\Login.cshtml" />
+    <Content Include="Views\Home\Blog\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

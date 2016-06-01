@@ -12,7 +12,7 @@ namespace Blog.Controllers
         {
             ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
 
-            return View();
+            return View("Blog/Home");
         }
 
         public ActionResult About()
