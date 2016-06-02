@@ -21,8 +21,8 @@
     </div>
 
 
-    <div class="Photo" style="float: left; text-align: center; width:25%; border:solid 5px; margin:5px; overflow-y:scroll">
-        <h3>Фотографии</h3>
+    <div class="Photo" style="float: left; text-align: center; width: 25%; border: solid 5px; margin: 5px; overflow-y: scroll; max-height: 500px">
+        <h3>Последние фотографии</h3>
         <p></p>тут будут фотографии
         <p></p>тут будут фотографии
         <p></p>тут будут фотографии
@@ -31,17 +31,22 @@
     </div>
     
 
-    <div class="BlogData" style="float: left; text-align: center; width: 55%; border: dashed 5px; margin: 5px; overflow-y: scroll; ">
-        <h3>Последние записи блоггеров</h3>
-        <div>
-
+    <div class="BlogData" style="float: left; text-align: center; width: 55%; border: dashed 5px; margin: 5px; overflow-y: scroll; padding-left: 10px; padding-right: 10px; max-height: 500px">
+        <h3 style="color:green">Последние записи блоггеров:</h3>
+        <p></p>
+        @{
+            for (int i = 0; i < 30; i++)
+            {
+        <div style="border:solid 1px">
+        <h4>@ViewBag.text</h4>
+        @ViewBag.text
         </div>
-        <p>записи блогеров</p>
-        <p>записи блогеров</p>
-        <p>записи блогеров</p>
-        <p>записи блогеров</p>
-        <p>записи блогеров</p>
-        <p>записи блогеров</p>
+            }            
+        }
+
+
+
+
     </div>
 
 
