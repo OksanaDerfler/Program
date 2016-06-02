@@ -21,9 +21,12 @@ namespace Blog.Controllers
         {
            // ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
             Models.dbblog db = new Models.dbblog();
-            var blogRecords = db.Records.FirstOrDefault();
-            ViewBag.text = blogRecords.Text;
-           
+            var blogRecords = db.Records.Where(p => p.Id < 10).ToList();
+            ViewBag.data = blogRecords;
+
+            var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
+            ViewBag.tags = tags;
+
             return View("Blog/Home");
         }
 

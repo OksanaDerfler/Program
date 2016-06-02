@@ -10,18 +10,21 @@
     <title>BlogHomePage</title>
 </head>
 <body>
-    <div class="Tags" style="float: left; background: #ffd800; width: 10%; border: dashed 5px; padding: 10px; height:500px; overflow:hidden">
+    <div class="Tags" style="float: left; background: #ffd800; width: 15%; border: dashed 5px; padding: 10px; height:500px; overflow:hidden">
           <h2>Теги</h2>
-          <p>#Спорт</p>
-          <p>#Музыка</p>
-          <p>#Хобби</p>
-          <p>#Новости</p>
-          <p>#Политика</p> 
-          <p>#Власть</p> 
+
+        @{
+            foreach (var tag in ViewBag.tags)
+            { 
+                      <p>#@tag</p>
+        }
+            
+        }
+
     </div>
 
 
-    <div class="Photo" style="float: left; text-align: center; width: 25%; border: solid 5px; margin: 5px; overflow-y: scroll; max-height: 500px">
+    <div class="Photo" style="float: left; text-align: center; width: 20%; border: solid 5px; margin: 5px; overflow-y: scroll; max-height: 500px">
         <h3>Последние фотографии</h3>
         <p></p>тут будут фотографии
         <p></p>тут будут фотографии
@@ -34,21 +37,27 @@
     <div class="BlogData" style="float: left; text-align: center; width: 55%; border: dashed 5px; margin: 5px; overflow-y: scroll; padding-left: 10px; padding-right: 10px; max-height: 500px">
         <h3 style="color:green">Последние записи блоггеров:</h3>
         <p></p>
-        @{
-            for (int i = 0; i < 30; i++)
+
+        @{            
+            foreach (var blogs in ViewBag.data)
             {
-        <div style="border:solid 1px">
-        <h4>@ViewBag.text</h4>
-        @ViewBag.text
+        <div style="border: solid 1px; margin-bottom: 15px; border-color:blue; border-width:medium;">
+
+            <div style="float:left">@@@blogs.Nick</div>
+
+        <h4>@blogs.Title</h4>
+            <p></p>
+            <p></p>
+            @blogs.Text
         </div>
-            }            
+            }  
+                      
         }
 
 
 
 
     </div>
-
 
 
 </body>

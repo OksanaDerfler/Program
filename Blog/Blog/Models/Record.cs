@@ -22,5 +22,6 @@ namespace Blog.Models
         public Nullable<int> IdLogin { get; set; }
         public Nullable<int> Like { get; set; }
         public Nullable<int> Dislike { get; set; }
+        public string Nick { get; set; }
     }
 }

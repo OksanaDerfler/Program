@@ -4,7 +4,7 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="Records">
           <Key>
             <PropertyRef Name="Id" />
@@ -17,12 +17,12 @@
           <Property Name="IdLogin" Type="int" />
           <Property Name="Like" Type="int" />
           <Property Name="Dislike" Type="int" />
+          <Property Name="Nick" Type="nvarchar" MaxLength="50" />
         </EntityType>
         <EntityContainer Name="Хранилище ModelContainer">
           <EntitySet Name="Records" EntityType="Self.Records" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -38,6 +38,7 @@
           <Property Name="IdLogin" Type="Int32" />
           <Property Name="Like" Type="Int32" />
           <Property Name="Dislike" Type="Int32" />
+          <Property Name="Nick" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
         </EntityType>
         <EntityContainer Name="dbblog" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Records" EntityType="Self.Record" />
@@ -51,6 +52,7 @@
           <EntitySetMapping Name="Records">
             <EntityTypeMapping TypeName="Model.Record">
               <MappingFragment StoreEntitySet="Records">
+                <ScalarProperty Name="Nick" ColumnName="Nick" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
