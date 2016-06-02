@@ -19,7 +19,7 @@ namespace Blog.Models
     }
 
     [Table("UserProfile")]
-    public class UserProfile
+    public partial class UserProfile
     {
         [Key]
         [DatabaseGeneratedAttribute(DatabaseGeneratedOption.Identity)]

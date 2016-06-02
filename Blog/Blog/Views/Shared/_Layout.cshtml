@@ -13,7 +13,8 @@
         <header>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <p class="site-title">@Html.ActionLink("Blog", "Index", "Home")</p>
+                    
+                    <p class="site-title"> <img src="Images/bicon.png" width="80" height="80">@Html.ActionLink("Blog", "Index", "Home")</p>
                     <p class="site-title">@Html.ActionLink("Узнайте, что происходит прямо сейчас!", "Index", "Home")</p>
                 </div>
                 <div class="float-right">
@@ -33,7 +34,8 @@
         <footer>
             <div class="content-wrapper">
                 <div class="float-left">
-                    <a href="">О сайте</a>  <a href="">Правила Blog'a</a>
+                    @Html.ActionLink("Правила Blog'a", "Rules", "Home")
+                    @Html.ActionLink("О сайте", "Rules", "Home")
                     <p>Blog &copy; @DateTime.Now.Year</p>
                 </div>
             </div>
