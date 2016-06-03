@@ -24,7 +24,7 @@ namespace Blog.Controllers
                 Models.dbblog db = new Models.dbblog()
             )
             {
-            var blogRecords = db.Records.Where(p => p.Id < 10).ToList();
+            var blogRecords = db.Records.Where(p => p.Id < 4).ToList();
             ViewBag.data = blogRecords;
             var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
             ViewBag.tags = tags;
