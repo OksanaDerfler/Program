@@ -12,6 +12,7 @@
         <h2>Теги</h2>
         <hr />
         @{
+            //Вставка выбранных тегов
             foreach (var tag in ViewBag.tags)
             {
                 <a href="#"><div>#@tag</div></a>
@@ -22,13 +23,20 @@
 
     <div class="Photo" style="float: left; text-align: center; width: 40%; margin-left: 5px; overflow-y: auto; max-height: 500px; background-color: #fff; border: solid 1px rgba(0, 0, 0, 0.22); ">
         <h3 style="margin-top: 5px; margin-bottom: 10px;">Последние фотографии</h3>
-        @{
-            for (int i = 0; i < 10; i++)
-            {
-                <img src="http://placehold.it/150x150"
-                     style="margin: 10px;">
-            }
-        }
+                @{
+                    //Производим вставку фото в страницу
+                    int i = 0;
+    foreach (var photo in ViewBag.photo)
+    {
+        string dir = new DirectoryInfo(photo).Parent.Name;
+        string file = Path.GetFileName(photo);
+        string filepath = Path.Combine(dir,file);
+        <img src="@filepath" style="margin: 10px; height:150px; width:150px" />
+        i++;
+        if (i > 5)
+        { break; }
+    }
+}
         
     </div>
 
@@ -37,6 +45,7 @@
         <h3 style="margin: 0; color: green">Последние записи блоггеров:</h3>
         <p></p>
         @{
+            //Вставка записей блогов
             foreach (var blogs in ViewBag.data)
             {
                 <div style="margin-bottom: 5px; padding: 5px; background-color: #fff; border: solid 1px rgba(0, 0, 0, 0.22)">

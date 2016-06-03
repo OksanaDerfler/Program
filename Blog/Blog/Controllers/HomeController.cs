@@ -9,6 +9,7 @@ using System.Data;
 using System.Data.Common;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
+using System.IO;
 
 namespace Blog.Controllers
 {
@@ -19,16 +20,21 @@ namespace Blog.Controllers
         /// </summary>
         public ActionResult Index()
         {
-           // ViewBag.Message = "Modify this template to jump-start your ASP.NET MVC application.";
-            using (
-                Models.dbblog db = new Models.dbblog()
-            )
+            //Подключаемся к базе данных
+            using (Models.dbblog db = new Models.dbblog())
             {
+            //Забираем блог записи
             var blogRecords = db.Records.Where(p => p.Id < 4).ToList();
             ViewBag.data = blogRecords;
             var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
             ViewBag.tags = tags;
             }
+
+            //Забираем фотографии из хранилища
+            var photoPath = ControllerContext.HttpContext.Server.MapPath(@"~/Photo");
+            var photoFilenames = Directory.GetFiles(photoPath);            
+            ViewBag.photo = photoFilenames;
+
             return View("Blog/Home");
             
             
