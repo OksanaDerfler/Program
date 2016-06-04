@@ -55,7 +55,7 @@ namespace Blog.Controllers
                 return View("Blog/ErrorLowLength");
             }
 
-            //Если данные прошли проверку, необходимо записать данные в базу
+            //Если данные прошли проверку, необходимо записать их в базу
 
             Models.Record mr = new Models.Record();
             mr.Title = record.title;
