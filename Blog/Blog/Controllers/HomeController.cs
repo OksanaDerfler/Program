@@ -97,5 +97,16 @@ namespace Blog.Controllers
         {
             return View("Blog/Rules");
         }
+        public ActionResult Records()
+        {
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //Забираем блоги
+                var blogRecords = db.Records.Where(p => p.Id > 0).ToList().OrderByDescending(p => p.Id);
+                ViewBag.data = blogRecords;
+            }
+            return View("Blog/Records");
+        }
+
     }
 }
