@@ -16,7 +16,7 @@ namespace Blog.Controllers
     public class HomeController : Controller
         {
         /// <summary>
-        /// Метод отвечает за запуск главной страницы
+        /// Метод отвечает за запуск главной страницы и возвращающий данные из БД
         /// </summary>
         [HttpGet]    
         public ActionResult Index()
@@ -42,6 +42,11 @@ namespace Blog.Controllers
             
         }
 
+        /// <summary>
+        /// Метод принимающий данные от пользователя и обрабатывающий их
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Index(Models.NewRecord record)
         {
@@ -81,6 +86,11 @@ namespace Blog.Controllers
             return View("Blog/AddNotification");  
         }
 
+        /// <summary>
+        /// Метод на поиск записей по тегам
+        /// </summary>
+        /// <param name="sear"></param>
+        /// <returns></returns>
         [HttpPost]
         public ActionResult Search(Models.Search sear)
         {
@@ -109,6 +119,11 @@ namespace Blog.Controllers
         {
             return View("Blog/Rules");
         }
+
+        /// <summary>
+        /// Метод забирает из БД все записи по блогам
+        /// </summary>
+        /// <returns></returns>
         public ActionResult Records()
         {
             using (Models.dbblog db = new Models.dbblog())
