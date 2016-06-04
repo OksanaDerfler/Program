@@ -1,15 +1,19 @@
 ﻿@model Blog.Models.LoginModel
 
 @{
+    Layout = null;
+}
+
+@{
     ViewBag.Title = "Вход";
 }
 
 <hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
+    <h1>@ViewBag.Title</h1>
 </hgroup>
 
 <section id="loginForm">
-<h2>Используйте для входа локальную учетную запись.</h2>
+<h2>Используйте для входа учетную запись.</h2>
 @using (Html.BeginForm(new { ReturnUrl = ViewBag.ReturnUrl })) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true)
@@ -40,11 +44,10 @@
 }
 </section>
 
-<section class="social" id="socialLoginForm">
-    <h2>Используйте для входа другую службу.</h2>
-    @Html.Action("ExternalLoginsList", new { ReturnUrl = ViewBag.ReturnUrl })
-</section>
-
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
 }
+
+
+
+
