@@ -72,6 +72,13 @@
             }
 
             @Html.ActionLink("Посмотреть все записи", "Records", "Home") 
+            <p></p>
+            <div>
+                <form method="post" action="Home/Search">
+                    <input type="text" name="search" placeholder="#Поиск по тегу" style="width:200px; height:20px"/>
+                    <input type="submit" name="subsearch" value="Поиск" style="width:100px; height:40px" />
+                </form>
+            </div>
 
         </div>
 

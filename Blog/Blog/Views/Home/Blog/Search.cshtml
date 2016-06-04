@@ -1,0 +1,42 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AllRecord</title>
+</head>
+<body>
+    <div>
+        @Html.ActionLink("Вернуться на главную", "Index", "Home")
+        <h1>Найденные записи:</h1>
+        @{
+            //Вставка записей блогов
+            foreach (var blogs in ViewBag.data)
+            {
+                <div style="margin-bottom: 5px; padding: 5px; background-color: #fff; border: solid 1px rgba(0, 0, 0, 0.22)">
+                    <div>
+                        <div style="float: left">@@@blogs.Nick</div>
+                        <div style="float: right">@blogs.DateStart.ToString("d MMM yyyy")</div>
+                    </div>
+                    <h4>@blogs.Title</h4>
+                    <p></p>
+                    <p>@blogs.Text</p>
+
+                    <div>
+                        <span>Likes: <a href="" style="color:green">@blogs.Like</a></span>
+                        <span>Dislikes: <a href="" style="color:red">@blogs.Dislike</a> </span>
+                    </div>
+                </div>
+
+
+
+            }
+
+        }
+    </div>
+</body>
+</html>

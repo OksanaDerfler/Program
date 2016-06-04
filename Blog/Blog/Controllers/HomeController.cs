@@ -81,6 +81,18 @@ namespace Blog.Controllers
             return View("Blog/AddNotification");  
         }
 
+        [HttpPost]
+        public ActionResult Search(Models.Search sear)
+        {
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //Забираем блоги
+                var blogRecords = db.Records.Where(p => p.Tag.Contains(sear.search)).ToList().OrderByDescending(p => p.Id);
+                ViewBag.data = blogRecords;
+            }
+            return View("Blog/Search");
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";

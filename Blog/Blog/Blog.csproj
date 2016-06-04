@@ -209,6 +209,7 @@
     <Compile Include="Models\Record.cs">
       <DependentUpon>dbblog.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Search.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -351,6 +352,7 @@
     <Content Include="Views\Home\Blog\AddNotification.cshtml" />
     <Content Include="Views\Home\Blog\ErrorLowLength.cshtml" />
     <Content Include="Views\Home\Blog\Records.cshtml" />
+    <Content Include="Views\Home\Blog\Search.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
