@@ -36,14 +36,12 @@
         <div class="AddRecord" style="border: solid 1px; padding: 10px; text-align:center">
             <form action="/Home/Index" method="post">
                 <h4 style="text-align:center">Добавить быструю запись:</h4>
-                <p></p>
-                Тема сообщения:
-                <p></p>
+
                 <input type="text" placeholder="Тема сообщения" name="title" />
                 <p></p>
-                Сообщение:
-                <p></p>
                 <textarea name="textarea" placeholder="Текст сообщения"></textarea>
+                <p></p>
+                <input type="text" placeholder="Тег" name="tag"/><input type="text" placeholder="Ник" name="nick" />
                 <p></p>
                 <input type="submit" name="AddREcord" value="Отправить сообщение" />
             </form>

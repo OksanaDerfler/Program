@@ -7,7 +7,8 @@ namespace Blog.Models
 {
     public class NewRecord
     {
-        public string Nick = "Anonimous";
+        public string nick { get; set; }
+        public string tag { get; set; }
         public string title { get; set;}
         public string textarea { get; set;}
     }

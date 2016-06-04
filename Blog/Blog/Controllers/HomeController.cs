@@ -60,8 +60,14 @@ namespace Blog.Controllers
             Models.Record mr = new Models.Record();
             mr.Title = record.title;
             mr.Text = record.textarea;
-            mr.Nick = record.Nick;
-            mr.Tag = "нет";
+
+            if (string.IsNullOrEmpty(record.nick))
+            { mr.Nick = "Anonimous"; }
+            else { mr.Nick = record.nick;}
+            if (string.IsNullOrEmpty(record.tag))
+            { mr.Tag = "No"; }
+            else { mr.Tag = record.tag; }
+                        
             mr.Like = 0;
             mr.Dislike = 0;
             mr.DateStart = DateTime.Now;
