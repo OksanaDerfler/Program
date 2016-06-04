@@ -102,7 +102,6 @@ namespace Blog.Controllers
             }
             return View("Blog/Search");
         }
-
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
