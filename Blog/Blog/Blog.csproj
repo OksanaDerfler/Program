@@ -205,6 +205,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>dbblog.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\NewRecord.cs" />
     <Compile Include="Models\Record.cs">
       <DependentUpon>dbblog.tt</DependentUpon>
     </Compile>
@@ -349,6 +350,9 @@
     <Content Include="Views\Home\Blog\Login.cshtml" />
     <Content Include="Views\Home\Blog\Profile.cshtml" />
     <Content Include="Views\Home\Blog\Rules.cshtml" />
+    <Content Include="Views\Home\Blog\Error.cshtml" />
+    <Content Include="Views\Home\Blog\AddNotification.cshtml" />
+    <Content Include="Views\Home\Blog\ErrorLowLength.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

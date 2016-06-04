@@ -18,13 +18,15 @@ namespace Blog.Controllers
         /// <summary>
         /// Метод отвечает за запуск главной страницы
         /// </summary>
+        [HttpGet]    
         public ActionResult Index()
         {
             //Подключаемся к базе данных
             using (Models.dbblog db = new Models.dbblog())
             {
-            //Забираем блог записи
-            var blogRecords = db.Records.Where(p => p.Id < 4).ToList();
+            //Забираем последние блоги по записям
+            var maxint = db.Records.Max(p => p.Id);
+            var blogRecords = db.Records.Where(p => p.Id > maxint-3).ToList().OrderByDescending(p => p.Id);
             ViewBag.data = blogRecords;
             var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
             ViewBag.tags = tags;
@@ -40,24 +42,53 @@ namespace Blog.Controllers
             
         }
 
+        [HttpPost]
+        public ActionResult Index(Models.NewRecord record)
+        {
+            if (string.IsNullOrEmpty(record.textarea) || string.IsNullOrEmpty(record.title))
+            {
+                return View("Blog/Error");
+            }
+
+            if (record.textarea.Length < 10 || record.title.Length < 10)
+            {
+                return View("Blog/ErrorLowLength");
+            }
+
+            //Если данные прошли проверку, необходимо записать данные в базу
+
+            Models.Record mr = new Models.Record();
+            mr.Title = record.title;
+            mr.Text = record.textarea;
+            mr.Nick = record.Nick;
+            mr.Tag = "нет";
+            mr.Like = 0;
+            mr.Dislike = 0;
+            mr.DateStart = DateTime.Now;
+
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                db.Records.Add(mr);
+                db.SaveChanges();
+            }
+
+            return View("Blog/AddNotification");  
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";
 
             return View();
         }
-
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
 
             return View();
         }
-
         public ActionResult Rules()
         {
-           // ViewBag.Message = "Your contact page.";
-
             return View("Blog/Rules");
         }
     }
