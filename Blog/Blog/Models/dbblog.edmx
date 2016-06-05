@@ -13,7 +13,7 @@
           <Property Name="Title" Type="nvarchar(max)" />
           <Property Name="Text" Type="nvarchar(max)" />
           <Property Name="DateStart" Type="date" />
-          <Property Name="Tag" Type="nchar" MaxLength="20" />
+          <Property Name="Tag" Type="nvarchar" MaxLength="50" />
           <Property Name="IdLogin" Type="int" />
           <Property Name="Like" Type="int" />
           <Property Name="Dislike" Type="int" />
@@ -34,7 +34,7 @@
           <Property Name="Title" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateStart" Type="DateTime" Precision="0" />
-          <Property Name="Tag" Type="String" MaxLength="20" FixedLength="true" Unicode="true" />
+          <Property Name="Tag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="IdLogin" Type="Int32" />
           <Property Name="Like" Type="Int32" />
           <Property Name="Dislike" Type="Int32" />

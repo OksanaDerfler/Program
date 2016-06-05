@@ -353,6 +353,7 @@
     <Content Include="Views\Home\Blog\ErrorLowLength.cshtml" />
     <Content Include="Views\Home\Blog\Records.cshtml" />
     <Content Include="Views\Home\Blog\Search.cshtml" />
+    <Content Include="Views\Home\Blog\HomeAuth.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

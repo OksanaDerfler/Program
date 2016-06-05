@@ -21,24 +21,50 @@ namespace Blog.Controllers
         [HttpGet]    
         public ActionResult Index()
         {
-            //Подключаемся к базе данных
-            using (Models.dbblog db = new Models.dbblog())
+
+            //Если мы аутентифицированы
+            if (HttpContext.User.Identity.IsAuthenticated)
             {
-            //Забираем последние блоги по записям
-            var maxint = db.Records.Max(p => p.Id);
-            var blogRecords = db.Records.Where(p => p.Id > maxint-3).ToList().OrderByDescending(p => p.Id);
-            ViewBag.data = blogRecords;
-            var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
-            ViewBag.tags = tags;
+                //Подключаемся к базе данных
+                using (Models.dbblog db = new Models.dbblog())
+                {
+                    //Забираем последние блоги по записям
+                    var maxint = db.Records.Max(p => p.Id);
+                    var blogRecords = db.Records.Where(p => p.Id > maxint - 3).ToList().OrderByDescending(p => p.Id);
+                    ViewBag.data = blogRecords;
+                    var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
+                    ViewBag.tags = tags;
+                }
+
+                //Забираем фотографии из хранилища
+                var photoPath = ControllerContext.HttpContext.Server.MapPath(@"~/Photo");
+                var photoFilenames = Directory.GetFiles(photoPath);
+                ViewBag.photo = photoFilenames;
+                string login = HttpContext.User.Identity.Name;
+                return View("Blog/HomeAuth");
             }
 
-            //Забираем фотографии из хранилища
-            var photoPath = ControllerContext.HttpContext.Server.MapPath(@"~/Photo");
-            var photoFilenames = Directory.GetFiles(photoPath);            
-            ViewBag.photo = photoFilenames;
+            else
+            {
 
-            return View("Blog/Home");
-            
+                //Подключаемся к базе данных
+                using (Models.dbblog db = new Models.dbblog())
+                {
+                    //Забираем последние блоги по записям
+                    var maxint = db.Records.Max(p => p.Id);
+                    var blogRecords = db.Records.Where(p => p.Id > maxint - 3).ToList().OrderByDescending(p => p.Id);
+                    ViewBag.data = blogRecords;
+                    var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
+                    ViewBag.tags = tags;
+                }
+
+                //Забираем фотографии из хранилища
+                var photoPath = ControllerContext.HttpContext.Server.MapPath(@"~/Photo");
+                var photoFilenames = Directory.GetFiles(photoPath);
+                ViewBag.photo = photoFilenames;
+
+                return View("Blog/Home");
+            }
             
         }
 
@@ -50,12 +76,14 @@ namespace Blog.Controllers
         [HttpPost]
         public ActionResult Index(Models.NewRecord record)
         {
-            if (string.IsNullOrEmpty(record.textarea) || string.IsNullOrEmpty(record.title))
+
+
+            if (string.IsNullOrEmpty(record.textarea) || string.IsNullOrEmpty(record.title) || string.IsNullOrEmpty(record.tag))
             {
                 return View("Blog/Error");
             }
 
-            if (record.textarea.Length < 10 || record.title.Length < 10)
+            if (record.textarea.Length < 10 || record.title.Length < 10 || record.tag.Length<1)
             {
                 return View("Blog/ErrorLowLength");
             }
@@ -66,13 +94,22 @@ namespace Blog.Controllers
             mr.Title = record.title;
             mr.Text = record.textarea;
 
-            if (string.IsNullOrEmpty(record.nick))
-            { mr.Nick = "Anonimous"; }
-            else { mr.Nick = record.nick;}
+            if (HttpContext.User.Identity.IsAuthenticated)
+            {
+                string login = HttpContext.User.Identity.Name;
+                mr.Nick = login;
+            }
+            else
+            {if (string.IsNullOrEmpty(record.nick))
+            { 
+            mr.Nick = "Anonimous"; }
+            else { mr.Nick = record.nick; }           
+            }
+
             if (string.IsNullOrEmpty(record.tag))
             { mr.Tag = "No"; }
             else { mr.Tag = record.tag; }
-                        
+
             mr.Like = 0;
             mr.Dislike = 0;
             mr.DateStart = DateTime.Now;
@@ -83,7 +120,8 @@ namespace Blog.Controllers
                 db.SaveChanges();
             }
 
-            return View("Blog/AddNotification");  
+
+            return View("Blog/AddNotification");
         }
 
         /// <summary>
