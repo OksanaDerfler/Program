@@ -158,7 +158,17 @@ namespace Blog.Controllers
             }
             return View("Blog/Records");
         }
-        
+
+        public ActionResult NameRedirect(string id)
+        {
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //Забираем блоги
+                var blogRecords = db.Records.Where(p => p.Nick == id).ToList();
+                ViewBag.data = blogRecords;
+            }
+            return View("Blog/Records");
+        }
 
     }
 }
