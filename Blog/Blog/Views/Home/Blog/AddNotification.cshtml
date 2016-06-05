@@ -11,8 +11,8 @@
 </head>
 <body>
     <div>
-        <h1>Сообщение записано в БД</h1>
-        @Html.ActionLink("Вернуться на главную","Index","Home")
+        <h1>@User.Identity.Name - Ваше сообщение успешно добавлено!</h1>
+        @Html.ActionLink("Вернуться в профиль", "Manage", "Account")
     </div>
 </body>
 </html>

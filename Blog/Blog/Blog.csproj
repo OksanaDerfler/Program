@@ -210,6 +210,7 @@
       <DependentUpon>dbblog.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Search.cs" />
+    <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -346,14 +347,13 @@
     <Content Include="Views\Home\Blog\Registration.cshtml" />
     <Content Include="Views\Home\Blog\NewRecord.cshtml" />
     <Content Include="Views\Home\Blog\Login.cshtml" />
-    <Content Include="Views\Home\Blog\Profile.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Home\Blog\Rules.cshtml" />
     <Content Include="Views\Home\Blog\Error.cshtml" />
     <Content Include="Views\Home\Blog\AddNotification.cshtml" />
     <Content Include="Views\Home\Blog\ErrorLowLength.cshtml" />
     <Content Include="Views\Home\Blog\Records.cshtml" />
     <Content Include="Views\Home\Blog\Search.cshtml" />
-    <Content Include="Views\Home\Blog\HomeAuth.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

@@ -122,11 +122,15 @@ namespace Blog.Controllers
             return RedirectToAction("Manage", new { Message = message });
         }
 
-        //
-        // GET: /Account/Manage
-
+        //Метод отвечает за переброс на вьюшку страницы управления профилем
         public ActionResult Manage(ManageMessageId? message)
         {
+            //Здесь открываем страницу с профилем, а который мы грузим сообщения пользователя с возможностью их редактирования
+
+            return View("Profile");
+
+
+            /*
             ViewBag.StatusMessage =
                 message == ManageMessageId.ChangePasswordSuccess ? "Пароль изменен."
                 : message == ManageMessageId.SetPasswordSuccess ? "Пароль задан."
@@ -135,7 +139,26 @@ namespace Blog.Controllers
             ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View();
+            */
         }
+
+        public ActionResult ChangePassword(ManageMessageId? message)
+        {
+            //Здесь открываем страницу с профилем, а который мы грузим сообщения пользователя с возможностью их редактирования
+
+            
+            ViewBag.StatusMessage =
+                message == ManageMessageId.ChangePasswordSuccess ? "Пароль изменен."
+                : message == ManageMessageId.SetPasswordSuccess ? "Пароль задан."
+                : message == ManageMessageId.RemoveLoginSuccess ? "Внешняя учетная запись удалена."
+                : "";
+            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+            ViewBag.ReturnUrl = Url.Action("Manage");
+            return View("Manage");
+            
+        }
+
+
 
         //
         // POST: /Account/Manage

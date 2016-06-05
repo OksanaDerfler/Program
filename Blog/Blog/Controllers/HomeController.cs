@@ -22,31 +22,6 @@ namespace Blog.Controllers
         public ActionResult Index()
         {
 
-            //Если мы аутентифицированы
-            if (HttpContext.User.Identity.IsAuthenticated)
-            {
-                //Подключаемся к базе данных
-                using (Models.dbblog db = new Models.dbblog())
-                {
-                    //Забираем последние блоги по записям
-                    var maxint = db.Records.Max(p => p.Id);
-                    var blogRecords = db.Records.Where(p => p.Id > maxint - 3).ToList().OrderByDescending(p => p.Id);
-                    ViewBag.data = blogRecords;
-                    var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
-                    ViewBag.tags = tags;
-                }
-
-                //Забираем фотографии из хранилища
-                var photoPath = ControllerContext.HttpContext.Server.MapPath(@"~/Photo");
-                var photoFilenames = Directory.GetFiles(photoPath);
-                ViewBag.photo = photoFilenames;
-                string login = HttpContext.User.Identity.Name;
-                return View("Blog/HomeAuth");
-            }
-
-            else
-            {
-
                 //Подключаемся к базе данных
                 using (Models.dbblog db = new Models.dbblog())
                 {
@@ -65,8 +40,7 @@ namespace Blog.Controllers
 
                 return View("Blog/Home");
             }
-            
-        }
+                    
 
         /// <summary>
         /// Метод принимающий данные от пользователя и обрабатывающий их
@@ -171,6 +145,20 @@ namespace Blog.Controllers
             }
             return View("Blog/Records");
         }
+
+
+        public ActionResult TagRedirect(string id)
+        {
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //Забираем блоги
+                var blogRecords = db.Records.Where(p => p.Tag == id).ToList();
+                //var blogRecords = db.Records.Where(p => p.Id > 0).ToList().OrderByDescending(p => p.Id);
+                ViewBag.data = blogRecords;
+            }
+            return View("Blog/Records");
+        }
+        
 
     }
 }

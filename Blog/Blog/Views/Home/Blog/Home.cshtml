@@ -1,4 +1,5 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "Home";
 }
 <!DOCTYPE html>
@@ -14,13 +15,15 @@
             <h2>Теги</h2>
             <hr />
             @{
-            //Вставка выбранных тегов
-            foreach (var tag in ViewBag.tags)
-            {
-                <a href="#"><div>#@tag</div></a>
-            }
+    //Вставка выбранных тегов
+    string tektag = "No";
+    foreach (var tag in ViewBag.tags)
+    {
+        tektag = tag;
+        <div> @Html.ActionLink("#" + tektag, "TagRedirect", "Home", new { id = tektag }, new { id = tektag }) </div> // <a href="#"><div>#@tag</div></a>
+    }
 
-            }
+}
         </div>
     <!-- Блок фотографий-->
         <div class="Photo" style="float: left; text-align: center; width: 40%; margin-left: 5px; overflow-y: auto; max-height: 600px; background-color: #fff; border: solid 1px rgba(0, 0, 0, 0.22); ">
