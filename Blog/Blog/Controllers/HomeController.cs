@@ -74,11 +74,9 @@ namespace Blog.Controllers
                 mr.Nick = login;
             }
             else
-            {if (string.IsNullOrEmpty(record.nick))
-            { 
-            mr.Nick = "Anonimous"; }
-            else { mr.Nick = record.nick; }           
-            }
+            {
+            mr.Nick = "Anonimous"; }     
+            
 
             if (string.IsNullOrEmpty(record.tag))
             { mr.Tag = "No"; }
@@ -88,12 +86,21 @@ namespace Blog.Controllers
             mr.Dislike = 0;
             mr.DateStart = DateTime.Now;
 
+            int newRecord = 0;
             using (Models.dbblog db = new Models.dbblog())
             {
+                newRecord = db.Records.Max(p => p.Id);
                 db.Records.Add(mr);
                 db.SaveChanges();
             }
+            newRecord = newRecord + 1;
 
+            //Сохраняем картинку, если она есть:
+            if (!(record.uplfile==null))
+            {
+               var dirName = Server.MapPath("~");
+               record.uplfile.SaveAs(dirName + @"Photo\" + newRecord + ".jpg");
+            }
 
             return View("Blog/AddNotification");
         }
@@ -145,7 +152,6 @@ namespace Blog.Controllers
             }
             return View("Blog/Records");
         }
-
 
         public ActionResult TagRedirect(string id)
         {
