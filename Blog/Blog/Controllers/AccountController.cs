@@ -125,21 +125,19 @@ namespace Blog.Controllers
         //Метод отвечает за переброс на вьюшку страницы управления профилем
         public ActionResult Manage(ManageMessageId? message)
         {
-            //Здесь открываем страницу с профилем, а который мы грузим сообщения пользователя с возможностью их редактирования
+            //Здесь открываем страницу с профилем, в которую мы грузим сообщения пользователя 
+            //с возможностью их редактирования
+
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //Забираем последние блоги по записям
+                var blogRecords = db.Records.Where(p => p.Nick == User.Identity.Name).ToList().OrderByDescending(p => p.Id);
+                ViewBag.data = blogRecords;
+            }
+
 
             return View("Profile");
 
-
-            /*
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Пароль изменен."
-                : message == ManageMessageId.SetPasswordSuccess ? "Пароль задан."
-                : message == ManageMessageId.RemoveLoginSuccess ? "Внешняя учетная запись удалена."
-                : "";
-            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-            ViewBag.ReturnUrl = Url.Action("Manage");
-            return View();
-            */
         }
 
         public ActionResult ChangePassword(ManageMessageId? message)
@@ -426,5 +424,42 @@ namespace Blog.Controllers
             }
         }
         #endregion
+
+
+
+        public ActionResult Delete(string Id)
+        {
+            //Удаляем запись из базы
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //Record Rec = new Record();
+                Int32 tekid = Convert.ToInt32(Id);
+
+                Record order = db.Records.Where(o => o.Id == tekid).FirstOrDefault();
+                db.Records.Remove(order);
+                db.SaveChanges();
+                //Забираем последние блоги по записям
+                var blogRecords = db.Records.Where(p => p.Nick == User.Identity.Name).ToList().OrderByDescending(p => p.Id);
+                ViewBag.data = blogRecords;
+            }
+
+            return View("Profile");
+        }
+
+
+        public ActionResult Edit(string Id)
+        {
+            //Удаляем запись из базы
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //Забираем последние блоги по записям
+                var blogRecords = db.Records.Where(p => p.Nick == User.Identity.Name).ToList().OrderByDescending(p => p.Id);
+                ViewBag.data = blogRecords;
+            }
+
+            return View("Profile");
+        }
+
+
     }
 }
