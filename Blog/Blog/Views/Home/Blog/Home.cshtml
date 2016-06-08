@@ -71,6 +71,16 @@
                     <p></p>
                     <p>@blogs.Text</p>
 
+                    @{ 
+                if (@blogs.Picture!=null)
+                {  <div>
+                        <img src="data:image;base64,@Convert.ToBase64String(@blogs.Picture)" style="margin-right: 310px; height:50px; width:50px" />
+                    </div>
+                    }
+                    }
+
+
+
                     <div style="float:right">
                         Likes: 
                         @{ string like = Convert.ToString(@blogs.Like);
