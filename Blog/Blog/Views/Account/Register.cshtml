@@ -8,34 +8,69 @@
 @{
     ViewBag.Title = "Регистрация";
 }
-
-<hgroup class="title">
-    <h1>@ViewBag.Title.</h1>
-    <h2>Создание новой учетной записи.</h2>
-</hgroup>
+@Styles.Render("~/Content/bootstrap.css")
+@Styles.Render("~/Content/Site.css")
+<div class="col-sm-offset-4">
+    <hgroup class="title">
+        <h1>@ViewBag.Title</h1>
+    </hgroup>
+</div>
 
 @using (Html.BeginForm()) {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary()
 
-    <fieldset>
-        <legend>Форма регистрации</legend>
-        <ol>
-            <li>
-                @Html.LabelFor(m => m.UserName)
-                @Html.TextBoxFor(m => m.UserName)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.Password)
-                @Html.PasswordFor(m => m.Password)
-            </li>
-            <li>
-                @Html.LabelFor(m => m.ConfirmPassword)
-                @Html.PasswordFor(m => m.ConfirmPassword)
-            </li>
-        </ol>
-        <input type="submit" value="Регистрация" />
-    </fieldset>
+    <div class="row">
+        <div class="col-sm-7">
+            <div class="col-sm-offset-1">
+                <div class="form-group">
+                    <div class="col-sm-5">
+                        @Html.LabelFor(m => m.UserName)
+                    </div>
+                    <div class="col-sm-7">
+                        @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
+                        @Html.ValidationMessageFor(m => m.UserName)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+            <div class="row">
+                <div class="col-sm-7">
+                    <div class="col-sm-offset-1">
+                        <div class="form-group">
+                            <div class="col-sm-5">
+                                @Html.LabelFor(m => m.Password)
+                            </div>
+                            <div class="col-sm-7">
+                                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.Password)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-7">
+                    <div class="col-sm-offset-1">
+                        <div class="form-group">
+                            <div class="col-sm-5">
+                                @Html.LabelFor(m => m.ConfirmPassword)
+                            </div>
+                            <div class="col-sm-7">
+                                @Html.PasswordFor(m => m.ConfirmPassword, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(m => m.ConfirmPassword)
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+       <div class="row">
+           <div class="col-sm-offset-3">
+               <button class="btn btn-success">Регистрация</button>
+           </div>
+       </div>
 }
 
 @section Scripts {

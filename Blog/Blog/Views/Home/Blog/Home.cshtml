@@ -2,6 +2,9 @@
 @{
     ViewBag.Title = "Home";
 }
+
+@Styles.Render("~/Content/Site.css")
+@Styles.Render("~/Content/bootstrap.css")
 <!DOCTYPE html>
 <html>
 <head>
@@ -71,22 +74,22 @@
                     <p></p>
                     <p>@blogs.Text</p>
 
-                    @{ 
-                if (@blogs.Picture!=null)
+                    @{
+                if (@blogs.Picture != null)
                 {  <div>
-                        <img src="data:image;base64,@Convert.ToBase64String(@blogs.Picture)" style="margin-right: 310px; height:50px; width:50px" />
-                    </div>
-                    }
+                    <img src="data:image;base64,@Convert.ToBase64String(@blogs.Picture)" style="margin-right: 310px; height:50px; width:50px" />
+                </div>
+                }
                     }
 
 
 
                     <div style="float:right">
-                        Likes: 
+                        Likes:
                         @{ string like = Convert.ToString(@blogs.Like);
                         @Html.ActionLink(" " + like, "Like", "Home", new { id = ID }, new { id = ID });
-                         }
-                                     
+                        }
+
                     </div>
                     
                     <div style="text-align:left">
@@ -101,8 +104,10 @@
             }
 
             }
-
-            @Html.ActionLink("Посмотреть все записи", "Records", "Home") 
+            
+            <div class="btn btn-default" id="showAllRecords">
+                <a href="@Url.Action("Records", "Home")">Посмотреть все записи</a>
+            </div>
             <p></p>
 
 
@@ -110,7 +115,7 @@
 
     <div>
         <form method="post" action="Home/Search">
-            <input type="text" name="search" placeholder="#Поиск по тегу" style="width:200px; height:20px" />
+            <input type="text" name="search" placeholder="#Поиск по тегу" style="width:275px; height:40px; margin-left:5px;" />
             <input type="submit" name="subsearch" value="Поиск" style="width:100px; height:40px" />
         </form>
     </div>

@@ -27,9 +27,7 @@ a {
         color: #333;
     }
 
-    a:hover {
-        background-color: #c7d1d6;
-    }
+
 
 header, footer, hgroup,
 nav, section {
@@ -416,8 +414,9 @@ fieldset {
 
 label {
     display: block;
-    font-size: 1.2em;
+    font-size: 1.4em;
     font-weight: 600;
+    margin-top:10px;
 }
 
 label.checkbox {
@@ -753,4 +752,9 @@ tr.pager td {
         footer p {
             margin: 0;
         }
+
+
 }
+    #showAllRecords {
+        width:350px;
+    }
