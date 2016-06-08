@@ -105,6 +105,11 @@ namespace Blog.Controllers
                     db.Records.Add(mr);
                     db.SaveChanges();
                 }
+                else
+                {
+                    db.Records.Add(mr);
+                    db.SaveChanges();
+                }
 
                 return View("Blog/AddNotification");
             }
