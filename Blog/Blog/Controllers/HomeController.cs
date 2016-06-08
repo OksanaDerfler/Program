@@ -208,5 +208,81 @@ namespace Blog.Controllers
             return View("Blog/Records");
         }
 
+        public ActionResult Like(int id)
+        {
+            using (Models.dbblog db = new Models.dbblog())
+            {
+            //    //Забираем блоги
+                var blogRecords = db.Records.Find(id);
+                blogRecords.Like = blogRecords.Like + 1;
+                db.SaveChanges();
+            }
+
+
+
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //Забираем последние блоги по записям
+                var maxint = db.Records.Max(p => p.Id);
+                // var blogRecords = db.Records.Where(p => p.Id > maxint - 3).ToList().OrderByDescending(p => p.Id);
+                var blogRecords = db.Records.ToList().OrderByDescending(p => p.Id);
+                ViewBag.data = blogRecords;
+                var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
+                ViewBag.tags = tags;
+            }
+            return View("Blog/Home");
+        }
+
+        public ActionResult LikeSearch(int id)
+        {
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //    //Забираем блоги
+                var blogRecords = db.Records.Find(id);
+                blogRecords.Like = blogRecords.Like + 1;
+                db.SaveChanges();
+            }
+
+            //Подключаемся к базе данных
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //Забираем последние блоги по записям
+                var maxint = db.Records.Max(p => p.Id);
+                // var blogRecords = db.Records.Where(p => p.Id > maxint - 3).ToList().OrderByDescending(p => p.Id);
+                var blogRecords = db.Records.ToList().OrderByDescending(p => p.Id);
+                ViewBag.data = blogRecords;
+                var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
+                ViewBag.tags = tags;
+            }
+
+            //Забираем фотографии из хранилища
+            //var photoPath = ControllerContext.HttpContext.Server.MapPath(@"~/Photo");
+            //var photoFilenames = Directory.GetFiles(photoPath);
+            //ViewBag.photo = photoFilenames;
+
+            return View("Blog/Home");
+        }
+
+
+        public ActionResult LikeRecords(int id)
+        {
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //    //Забираем блоги
+                var blogRecords = db.Records.Find(id);
+                blogRecords.Like = blogRecords.Like + 1;
+                db.SaveChanges();
+            }
+
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //Забираем блоги
+                var blogRecords = db.Records.Where(p => p.Id > 0).ToList().OrderByDescending(p => p.Id);
+                ViewBag.data = blogRecords;
+            }
+            return View("Blog/Records");
+
+        }
+
     }
 }
