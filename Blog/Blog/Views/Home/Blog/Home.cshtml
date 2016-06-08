@@ -29,18 +29,12 @@
         <div class="Photo" style="float: left; text-align: center; width: 40%; margin-left: 5px; overflow-y: auto; max-height: 600px; background-color: #fff; border: solid 1px rgba(0, 0, 0, 0.22); ">
             <h3 style="margin-top: 5px; margin-bottom: 10px;">Последние фотографии</h3>
             @{
-                    //Производим вставку фото в страницу
-                    int i = 0;
-    foreach (var photo in ViewBag.photo)
-    {
-        string dir = new DirectoryInfo(photo).Parent.Name;
-        string file = Path.GetFileName(photo);
-        string filepath = Path.Combine(dir,file);
-        <img src="@filepath" style="margin: 10px; height:150px; width:150px" />
-        i++;
-        if (i > 5)
-        { break; }
-    }
+                //Производим вставку фото в страницу
+                foreach (var picture in ViewBag.data)
+                {
+                    if (picture.Picture!=null)
+                    {<img src="data:image;base64,@Convert.ToBase64String(picture.Picture)" style="margin: 10px; height:150px; width:150px" />}
+                }
             }
 
         </div>
@@ -51,9 +45,11 @@
             <p></p>
             @{
             //Вставка записей блогов
-            
+            int count = 0;
             foreach (var blogs in ViewBag.data)
             {
+                if (count == 3)
+                { break; }
                 string ss = "";
                 ss = @blogs.Tag;
 
@@ -85,8 +81,7 @@
 
                 </div>
 
-
-
+                count++;
             }
 
             }

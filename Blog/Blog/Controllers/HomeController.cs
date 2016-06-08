@@ -14,33 +14,34 @@ using System.IO;
 namespace Blog.Controllers
 {
     public class HomeController : Controller
-        {
+    {
         /// <summary>
         /// Метод отвечает за запуск главной страницы и возвращающий данные из БД
         /// </summary>
-        [HttpGet]    
+        [HttpGet]
         public ActionResult Index()
         {
 
-                //Подключаемся к базе данных
-                using (Models.dbblog db = new Models.dbblog())
-                {
-                    //Забираем последние блоги по записям
-                    var maxint = db.Records.Max(p => p.Id);
-                    var blogRecords = db.Records.Where(p => p.Id > maxint - 3).ToList().OrderByDescending(p => p.Id);
-                    ViewBag.data = blogRecords;
-                    var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
-                    ViewBag.tags = tags;
-                }
-
-                //Забираем фотографии из хранилища
-                var photoPath = ControllerContext.HttpContext.Server.MapPath(@"~/Photo");
-                var photoFilenames = Directory.GetFiles(photoPath);
-                ViewBag.photo = photoFilenames;
-
-                return View("Blog/Home");
+            //Подключаемся к базе данных
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //Забираем последние блоги по записям
+                var maxint = db.Records.Max(p => p.Id);
+               // var blogRecords = db.Records.Where(p => p.Id > maxint - 3).ToList().OrderByDescending(p => p.Id);
+                var blogRecords = db.Records.ToList().OrderByDescending(p => p.Id);
+                ViewBag.data = blogRecords;
+                var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
+                ViewBag.tags = tags;
             }
-                    
+
+            //Забираем фотографии из хранилища
+            //var photoPath = ControllerContext.HttpContext.Server.MapPath(@"~/Photo");
+            //var photoFilenames = Directory.GetFiles(photoPath);
+            //ViewBag.photo = photoFilenames;
+
+            return View("Blog/Home");
+        }
+
 
         /// <summary>
         /// Метод принимающий данные от пользователя и обрабатывающий их
@@ -57,7 +58,7 @@ namespace Blog.Controllers
                 return View("Blog/Error");
             }
 
-            if (record.textarea.Length < 10 || record.title.Length < 10 || record.tag.Length<1)
+            if (record.textarea.Length < 10 || record.title.Length < 10 || record.tag.Length < 1)
             {
                 return View("Blog/ErrorLowLength");
             }
@@ -75,8 +76,9 @@ namespace Blog.Controllers
             }
             else
             {
-            mr.Nick = "Anonimous"; }     
-            
+                mr.Nick = "Anonimous";
+            }
+
 
             if (string.IsNullOrEmpty(record.tag))
             { mr.Tag = "No"; }
@@ -86,25 +88,26 @@ namespace Blog.Controllers
             mr.Dislike = 0;
             mr.DateStart = DateTime.Now;
 
-            int newRecord = 0;
+            // int newRecord = 0;
             using (Models.dbblog db = new Models.dbblog())
             {
-                newRecord = db.Records.Max(p => p.Id);
-                db.Records.Add(mr);
-                db.SaveChanges();
-            }
-            newRecord = newRecord + 1;
+                // newRecord = db.Records.Max(p => p.Id);
+                if (!(record.uplfile == null))
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        record.uplfile.InputStream.CopyTo(ms);
+                        mr.Picture = ms.ToArray();
 
-            //Сохраняем картинку, если она есть:
-            if (!(record.uplfile==null))
-            {
-               var dirName = Server.MapPath("~");
-               record.uplfile.SaveAs(dirName + @"Photo\" + newRecord + ".jpg");
-            }
+                    }
 
-            return View("Blog/AddNotification");
+                    db.Records.Add(mr);
+                    db.SaveChanges();
+                }
+
+                return View("Blog/AddNotification");
+            }
         }
-
         /// <summary>
         /// Метод на поиск записей по тегам
         /// </summary>

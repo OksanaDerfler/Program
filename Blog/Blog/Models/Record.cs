@@ -19,9 +19,9 @@ namespace Blog.Models
         public string Text { get; set; }
         public Nullable<System.DateTime> DateStart { get; set; }
         public string Tag { get; set; }
-        public Nullable<int> IdLogin { get; set; }
         public Nullable<int> Like { get; set; }
         public Nullable<int> Dislike { get; set; }
         public string Nick { get; set; }
+        public byte[] Picture { get; set; }
     }
 }

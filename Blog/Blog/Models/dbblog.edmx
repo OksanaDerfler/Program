@@ -14,10 +14,10 @@
           <Property Name="Text" Type="nvarchar(max)" />
           <Property Name="DateStart" Type="date" />
           <Property Name="Tag" Type="nvarchar" MaxLength="50" />
-          <Property Name="IdLogin" Type="int" />
           <Property Name="Like" Type="int" />
           <Property Name="Dislike" Type="int" />
           <Property Name="Nick" Type="nvarchar" MaxLength="50" />
+          <Property Name="Picture" Type="varbinary(max)" />
         </EntityType>
         <EntityContainer Name="Хранилище ModelContainer">
           <EntitySet Name="Records" EntityType="Self.Records" Schema="dbo" store:Type="Tables" />
@@ -35,10 +35,10 @@
           <Property Name="Text" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="DateStart" Type="DateTime" Precision="0" />
           <Property Name="Tag" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="IdLogin" Type="Int32" />
           <Property Name="Like" Type="Int32" />
           <Property Name="Dislike" Type="Int32" />
           <Property Name="Nick" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityContainer Name="dbblog" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Records" EntityType="Self.Record" />
@@ -52,13 +52,13 @@
           <EntitySetMapping Name="Records">
             <EntityTypeMapping TypeName="Model.Record">
               <MappingFragment StoreEntitySet="Records">
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
                 <ScalarProperty Name="Nick" ColumnName="Nick" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
                 <ScalarProperty Name="DateStart" ColumnName="DateStart" />
                 <ScalarProperty Name="Tag" ColumnName="Tag" />
-                <ScalarProperty Name="IdLogin" ColumnName="IdLogin" />
                 <ScalarProperty Name="Like" ColumnName="Like" />
                 <ScalarProperty Name="Dislike" ColumnName="Dislike" />
               </MappingFragment>
