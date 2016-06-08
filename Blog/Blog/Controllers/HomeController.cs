@@ -10,6 +10,7 @@ using System.Data.Common;
 using System.Data.Objects;
 using System.Data.Objects.DataClasses;
 using System.IO;
+using Blog.Models;
 
 namespace Blog.Controllers
 {
@@ -124,6 +125,34 @@ namespace Blog.Controllers
             }
             return View("Blog/Search");
         }
+
+        [HttpPost]
+        public ActionResult Edit(Models.EditRecord edrecord)
+        {
+            using (Models.dbblog db = new Models.dbblog())
+            {
+                //Здесь передадутся данные из базы в форму изменения записи
+                //Заменяем данные
+                Record rec = db.Records.Find(edrecord.idrec);
+                rec.Title = edrecord.title;
+                rec.Text = edrecord.textarea;
+                rec.Tag = edrecord.tag;
+
+                //Если есть картинка, то тоже заменяем
+                if (!(edrecord.uplfile == null))
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        edrecord.uplfile.InputStream.CopyTo(ms);
+                        rec.Picture = ms.ToArray();
+                    }
+                }
+
+                db.SaveChanges();
+            }
+            return View("Blog/NewEdit");
+        }
+
         public ActionResult About()
         {
             ViewBag.Message = "Your app description page.";

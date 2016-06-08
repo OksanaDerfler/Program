@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Edit</title>
+</head>
+<body>
+    <div>
+        <form action="/Home/Edit" method="post" enctype="multipart/form-data">
+            <input type="text" name="idrec" value="@ViewBag.record.Id" hidden="hidden"/>
+            <h4 style="text-align:center">Изменить запись:</h4>
+
+            <input type="text" name="title" value="@ViewBag.record.Title" />
+            <p></p>
+            <textarea name="textarea" >@ViewBag.record.Text</textarea>
+            <p></p>
+            <input type="text" name="tag" value="@ViewBag.record.Tag" />
+            <p></p>
+            Сменить jpeg картинку <p></p> <input type="file" name="uplfile" />
+            <p></p>
+            <input type="submit" name="EditREcord" value="Изменить запись" />
+        </form>
+    </div>
+</body>
+</html>

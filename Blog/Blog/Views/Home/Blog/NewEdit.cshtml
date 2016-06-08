@@ -1,0 +1,18 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>AddNotification</title>
+</head>
+<body>
+    <div>
+        <h1>@User.Identity.Name - Ваше сообщение успешно добавлено!</h1>
+        @Html.ActionLink("Вернуться в профиль", "Manage", "Account")
+    </div>
+</body>
+</html>

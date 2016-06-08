@@ -449,15 +449,18 @@ namespace Blog.Controllers
 
         public ActionResult Edit(string Id)
         {
-            //Удаляем запись из базы
+             //Открываем страницу для изменения записи
+            //Забираем данные по записи из БД
             using (Models.dbblog db = new Models.dbblog())
             {
-                //Забираем последние блоги по записям
-                var blogRecords = db.Records.Where(p => p.Nick == User.Identity.Name).ToList().OrderByDescending(p => p.Id);
-                ViewBag.data = blogRecords;
+                Int32 tekid = Convert.ToInt32(Id);
+
+                Record record = db.Records.Where(o => o.Id == tekid).FirstOrDefault();
+                ViewBag.record = record;
+
             }
 
-            return View("Profile");
+            return View("Edit");
         }
 
 
