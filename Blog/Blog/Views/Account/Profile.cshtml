@@ -1,0 +1,112 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Profile</title>
+</head>
+<body>
+    <div>
+        @Html.ActionLink("Главная страница", "Index", "Home")
+    </div>
+
+    <div>
+        @Html.ActionLink("Сменить пароль", "ChangePassword", "Account")
+    </div>
+
+
+    <div>
+        <h1 style="text-align:center"> @User.Identity.Name , добро пожаловать в комнату управления! </h1> 
+    </div>
+
+
+    <div class="AddRecord" style="border: solid 1px; padding: 10px; text-align:center">
+        <form action="/Home/Index" method="post" enctype="multipart/form-data">
+
+            <h4 style="text-align:center">Добавить новую запись:</h4>
+
+            <input type="text" placeholder="Тема сообщения" name="title" />
+            <p></p>
+            <textarea name="textarea" placeholder="Текст сообщения"></textarea>
+            <p></p>
+            <input type="text" placeholder="Тег" name="tag" />
+            <p></p>
+            Загрузить jpeg картинку <p></p> <input type="file" name="uplfile" />
+            <p></p>
+            <input type="submit" name="AddREcord" value="Отправить мою заметку" />
+        </form>
+    </div>
+
+
+
+    <p></p>
+
+
+    <div style="border: solid 1px">
+        <h3 style="align-content:center"> Редактировать записи: </h3>
+        @{
+        foreach (var blogs in ViewBag.data)
+        {
+
+        <div style="margin-bottom: 5px; padding: 5px; background-color: #fff; border: solid 1px rgba(0, 0, 0, 0.22)">
+            <div>
+                <div style="float: left">
+
+                    @blogs.Nick
+
+                </div>
+                <div style="float: right">@blogs.DateStart.ToString("d MMM yyyy")</div>
+            </div>
+            <h4>@blogs.Title</h4>
+            <p></p>
+            <p>@blogs.Text</p>
+
+            <div>
+                <span>Likes: <a href="" style="color:green">@blogs.Like</a></span>
+            </div>
+
+            <div style="text-align:left">
+                <p></p>
+                #@blogs.Tag
+                <p></p>
+                @Html.ActionLink("Редактировать запись", "Edit", "Account", new { Id = @blogs.Id }, new { Id = @blogs.Id })
+                @Html.ActionLink("Удалить", "Delete", "Account", new { Id = @blogs.Id }, new { Id = @blogs.Id })
+            </div>
+
+        </div>
+
+
+
+        }
+        }
+
+
+
+    </div>
+
+
+
+
+
+
+    <p></p>
+
+
+    <div>
+    </div>
+
+    <p></p>
+
+    <div>
+    </div>
+
+    <p></p>
+
+
+
+</body>
+</html>

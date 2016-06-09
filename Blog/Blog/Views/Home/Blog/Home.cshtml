@@ -1,0 +1,124 @@
+﻿
+@{
+    ViewBag.Title = "Home";
+}
+
+@Styles.Render("~/Content/Site.css")
+@Styles.Render("~/Content/bootstrap.css")
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>BlogHomePage</title>
+</head>
+<body>
+
+   <!-- Блок тегов -->      
+        <div class="Tags" style="float: left; width: 15%; padding: 10px; overflow: hidden; background-color: #fff; border: solid 1px rgba(0, 0, 0, 0.22); ">
+            <h2 style="color:blue">Теги</h2>
+            <hr />
+            @{
+    //Вставка выбранных тегов
+    string tektag = "No";
+    foreach (var tag in ViewBag.tags)
+    {
+        tektag = tag;
+        <div> @Html.ActionLink("#" + tektag, "TagRedirect", "Home", new { id = tektag }, new { id = tektag }) </div>
+    }
+
+}
+        </div>
+    <!-- Блок фотографий-->
+        <div class="Photo" style="float: left; text-align: center; width: 40%; margin-left: 5px; overflow-y: auto; max-height: 600px; background-color: #fff; border: solid 1px rgba(0, 0, 0, 0.22); ">
+            <h3 style="margin-top: 5px; margin-bottom: 10px;">Последние фотографии</h3>
+            @{
+                //Производим вставку фото в страницу
+                foreach (var picture in ViewBag.data)
+                {
+                    if (picture.Picture!=null)
+                    {<img src="data:image;base64,@Convert.ToBase64String(picture.Picture)" style="margin: 10px; height:150px; width:150px" />}
+                }
+            }
+
+        </div>
+    <!-- Блок записей -->
+        <div class="BlogData" style="float: left; text-align: center; width: 40%; margin-left: 5px; overflow-y: auto;
+                                max-height: 600px;">
+            <h3 style="margin: 0; color: green">Последние записи блоггеров:</h3>
+            <p></p>
+            @{
+            //Вставка записей блогов
+            int count = 0;
+            foreach (var blogs in ViewBag.data)
+            {
+                if (count == 3)
+                { break; }
+                string ss = "";
+                ss = @blogs.Tag;
+
+                string nickanme = "";
+                nickanme = @blogs.Nick;
+
+                string ID = "";
+                ID = Convert.ToString(@blogs.Id);
+                
+                <div style="margin-bottom: 5px; padding: 5px; background-color: #fff; border: solid 1px rgba(0, 0, 0, 0.22)">
+                    <div>
+                        <div style="float: left">
+                      
+                            @Html.ActionLink("@" + nickanme, "NameRedirect", "Home", new { id = nickanme }, new { id = nickanme })
+                        </div>
+                        <div style="float: right">@blogs.DateStart.ToString("d MMM yyyy")</div>
+                    </div>
+                    <h4>@blogs.Title</h4>
+                    <p></p>
+                    <p>@blogs.Text</p>
+
+                    @{
+                if (@blogs.Picture != null)
+                {  <div>
+                    <img src="data:image;base64,@Convert.ToBase64String(@blogs.Picture)" style="margin-right: 310px; height:50px; width:50px" />
+                </div>
+                }
+                    }
+
+
+
+                    <div style="float:right">
+                        Likes:
+                        @{ string like = Convert.ToString(@blogs.Like);
+                        @Html.ActionLink(" " + like, "Like", "Home", new { id = ID }, new { id = ID });
+                        }
+
+                    </div>
+                    
+                    <div style="text-align:left">
+                      
+                        @Html.ActionLink("#" + ss, "TagRedirect", "Home", new { id = ss }, new { id = ss })
+                        
+                    </div>
+
+                </div>
+
+                count++;
+            }
+
+            }
+            
+            <div class="btn btn-default" id="showAllRecords">
+                <a href="@Url.Action("Records", "Home")">Посмотреть все записи</a>
+            </div>
+            <p></p>
+
+
+        </div>
+
+    <div>
+        <form method="post" action="Home/Search">
+            <input type="text" name="search" placeholder="#Поиск по тегу" style="width:275px; height:40px; margin-left:5px;" />
+            <input type="submit" name="subsearch" value="Поиск" style="width:100px; height:40px" />
+        </form>
+    </div>
+
+</body>
+</html>
