@@ -365,6 +365,10 @@
     <Content Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="BLL\" />
+    <Folder Include="DAL\" />
+    <Folder Include="Entites\" />
+    <Folder Include="Interfaces\" />
     <Folder Include="Photo\" />
   </ItemGroup>
   <PropertyGroup>
