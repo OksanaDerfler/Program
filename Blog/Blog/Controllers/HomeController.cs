@@ -11,6 +11,7 @@ using System.Data.Objects;
 using System.Data.Objects.DataClasses;
 using System.IO;
 using Blog.Models;
+using DAL;
 
 namespace Blog.Controllers
 {
@@ -22,6 +23,9 @@ namespace Blog.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+
+          // var arr = new DAL.Recordd().GetAll();
+          // var arr2 = arr.FirstOrDefault();
 
             //Подключаемся к базе данных
             using (Models.dbblog db = new Models.dbblog())

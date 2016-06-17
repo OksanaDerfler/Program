@@ -11,11 +11,11 @@ namespace Entities
         public int id { get; set; }
         public string title { get; set; }
         public string text { get; set; }
-        public string dateStart { get; set;}
+        public DateTime dateStart { get; set;}
         public string tag { get; set; }
         public int like { get; set; }
         public string nick { get; set; }
-        public byte[] picture { get; set; }
+        public object picture { get; set; }
     }
 
 }
