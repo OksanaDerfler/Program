@@ -12,6 +12,7 @@ using System.Data.Objects.DataClasses;
 using System.IO;
 using Blog.Models;
 using DAL;
+using BLL;
 
 namespace Blog.Controllers
 {
@@ -23,10 +24,14 @@ namespace Blog.Controllers
         [HttpGet]
         public ActionResult Index()
         {
+            var tagDistinct = new Bll().GetDistinctTags().OrderBy(p=>p);
+            ViewBag.tags = tagDistinct;
+            var blogRecords = new DAL.Recordd().GetAll();
+            var maxint = blogRecords.Max(p => p.Id);
+            blogRecords = blogRecords.Where(p => p.Id > maxint - 7).ToList().OrderByDescending(p => p.Id);
+            ViewBag.data = blogRecords;
 
-          // var arr = new DAL.Recordd().GetAll();
-          // var arr2 = arr.FirstOrDefault();
-
+            /*
             //Подключаемся к базе данных
             using (Models.dbblog db = new Models.dbblog())
             {
@@ -38,7 +43,7 @@ namespace Blog.Controllers
                 var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
                 ViewBag.tags = tags;
             }
-
+            */
             //Забираем фотографии из хранилища
             //var photoPath = ControllerContext.HttpContext.Server.MapPath(@"~/Photo");
             //var photoFilenames = Directory.GetFiles(photoPath);
@@ -126,12 +131,22 @@ namespace Blog.Controllers
         [HttpPost]
         public ActionResult Search(Models.Search sear)
         {
+            /*
             using (Models.dbblog db = new Models.dbblog())
             {
                 //Забираем блоги
                 var blogRecords = db.Records.Where(p => p.Tag.Contains(sear.search)).ToList().OrderByDescending(p => p.Id);
                 ViewBag.data = blogRecords;
             }
+            */
+            if (sear.search == null)
+            {
+                ViewBag.data = null;
+                return View("Blog/Search");
+            }
+            var blogRecords = new DAL.Recordd().GetAll();
+            ViewBag.data = blogRecords.Where(p => p.Tag.Contains(sear.search)).ToList().OrderByDescending(p => p.Id);
+
             return View("Blog/Search");
         }
 
@@ -185,35 +200,51 @@ namespace Blog.Controllers
         /// <returns></returns>
         public ActionResult Records()
         {
+            /*
             using (Models.dbblog db = new Models.dbblog())
             {
                 //Забираем блоги
                 var blogRecords = db.Records.Where(p => p.Id > 0).ToList().OrderByDescending(p => p.Id);
                 ViewBag.data = blogRecords;
             }
+            */
+
+            var blogRecords = new DAL.Recordd().GetAll();
+            ViewBag.data = blogRecords.ToList();
+
             return View("Blog/Records");
         }
 
         public ActionResult TagRedirect(string id)
         {
-            using (Models.dbblog db = new Models.dbblog())
-            {
+           // using (Models.dbblog db = new Models.dbblog())
+           // {
                 //Забираем блоги
-                var blogRecords = db.Records.Where(p => p.Tag == id).ToList();
+                //var blogRecords = db.Records.Where(p => p.Tag == id).ToList();
                 //var blogRecords = db.Records.Where(p => p.Id > 0).ToList().OrderByDescending(p => p.Id);
-                ViewBag.data = blogRecords;
-            }
+           //     ViewBag.data = blogRecords;
+            //}
+
+            var blogRecords = new DAL.Recordd().GetAll();
+            ViewBag.data = blogRecords.Where(p => p.Tag == id).ToList();
+
             return View("Blog/Records");
         }
 
         public ActionResult NameRedirect(string id)
         {
+            /*
             using (Models.dbblog db = new Models.dbblog())
             {
                 //Забираем блоги
                 var blogRecords = db.Records.Where(p => p.Nick == id).ToList();
                 ViewBag.data = blogRecords;
             }
+            */
+
+            var blogRecords = new DAL.Recordd().GetAll();
+            ViewBag.data = blogRecords.Where(p => p.Nick == id).ToList();
+
             return View("Blog/Records");
         }
 

@@ -25,26 +25,44 @@ namespace DAL
                 {
                  yield return new Record()
                  { 
-                     id = (int)reader["Id"],
-                     title = (string)reader["Title"],
-                     text = (string)reader["Text"],
-                     dateStart = (DateTime)reader["DateStart"],
-                     tag = (string)reader["Tag"],
-                     like = (int)reader["Like"],
-                     nick = (string)reader["Nick"],
-                     picture = (object)reader["Picture"]
+                     Id = (int)reader["Id"],
+                     Title = (string)reader["Title"],
+                     Text = (string)reader["Text"],
+                     DateStart = (DateTime)reader["DateStart"],
+                     Tag = (string)reader["Tag"],
+                     Like = (int)reader["Like"],
+                     Nick = (string)reader["Nick"],
+                     Picture = (object)reader["Picture"]
                  };
                 }
                 
             }
-            throw new NotImplementedException();
-            // throw new NotImplementedException();
         }
         
         public Record Get(int id)
         {
-            Entities.Record onenn = new Entities.Record();
-            return onenn;
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                SqlCommand command = new SqlCommand("Select * from records where Id=@Id", connection);
+                command.Parameters.AddWithValue("@Id", id);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    return new Record()
+                    {
+                        Id = (int)reader["Id"],
+                        Title = (string)reader["Title"],
+                        Text = (string)reader["Text"],
+                        DateStart = (DateTime)reader["DateStart"],
+                        Tag = (string)reader["Tag"],
+                        Like = (int)reader["Like"],
+                        Nick = (string)reader["Nick"],
+                        Picture = (object)reader["Picture"]
+                    };
+                }
+               return new Record();
+            } 
         }
 
         public bool Create(Entities.Record record)

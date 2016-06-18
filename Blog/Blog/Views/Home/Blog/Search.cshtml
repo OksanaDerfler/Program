@@ -14,6 +14,8 @@
         @Html.ActionLink("Вернуться на главную", "Index", "Home")
         <h1>Найденные записи:</h1>
         @{
+            if (!(ViewBag.data == null))
+            { 
             //Вставка записей блогов
             foreach (var blogs in ViewBag.data)
             {
@@ -42,7 +44,7 @@
 
                 </div>
 
-
+        }
 
             }
 

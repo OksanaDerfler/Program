@@ -8,14 +8,14 @@ namespace Entities
 {
     public class Record
     {
-        public int id { get; set; }
-        public string title { get; set; }
-        public string text { get; set; }
-        public DateTime dateStart { get; set;}
-        public string tag { get; set; }
-        public int like { get; set; }
-        public string nick { get; set; }
-        public object picture { get; set; }
+        public int Id { get; set; }
+        public string Title { get; set; }
+        public string Text { get; set; }
+        public DateTime DateStart { get; set;}
+        public string Tag { get; set; }
+        public int Like { get; set; }
+        public string Nick { get; set; }
+        public object Picture { get; set; }
     }
 
 }

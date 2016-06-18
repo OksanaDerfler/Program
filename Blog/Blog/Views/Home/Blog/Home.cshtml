@@ -35,7 +35,7 @@
                 //Производим вставку фото в страницу
                 foreach (var picture in ViewBag.data)
                 {
-                    if (picture.Picture!=null)
+                    if (!Convert.IsDBNull(picture.Picture))                                          
                     {<img src="data:image;base64,@Convert.ToBase64String(picture.Picture)" style="margin: 10px; height:150px; width:150px" />}
                 }
             }
@@ -75,7 +75,7 @@
                     <p>@blogs.Text</p>
 
                     @{
-                if (@blogs.Picture != null)
+                if (!Convert.IsDBNull(@blogs.Picture))
                 {  <div>
                     <img src="data:image;base64,@Convert.ToBase64String(@blogs.Picture)" style="margin-right: 310px; height:50px; width:50px" />
                 </div>
