@@ -190,29 +190,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModels.cs" />
-    <Compile Include="Models\dbblog.Context.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dbblog.Context.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\dbblog.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dbblog.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Models\dbblog.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>dbblog.edmx</DependentUpon>
-    </Compile>
     <Compile Include="Models\EditRecord.cs" />
-    <Compile Include="Models\Like.cs">
-      <DependentUpon>dbblog.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\NewRecord.cs" />
-    <Compile Include="Models\Record.cs">
-      <DependentUpon>dbblog.tt</DependentUpon>
-    </Compile>
     <Compile Include="Models\Search.cs" />
     <Compile Include="Models\Tag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -278,25 +257,8 @@
     <Content Include="Content\themes\base\minified\jquery.ui.theme.min.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
-    <EntityDeploy Include="Models\dbblog.edmx">
-      <Generator>EntityModelCodeGenerator</Generator>
-      <LastGenOutput>dbblog.Designer.cs</LastGenOutput>
-    </EntityDeploy>
-    <Content Include="Models\dbblog.edmx.diagram">
-      <DependentUpon>dbblog.edmx</DependentUpon>
-    </Content>
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
     <Content Include="Images\bicon.png" />
-    <Content Include="Models\dbblog.Context.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>dbblog.edmx</DependentUpon>
-      <LastGenOutput>dbblog.Context.cs</LastGenOutput>
-    </Content>
-    <Content Include="Models\dbblog.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <DependentUpon>dbblog.edmx</DependentUpon>
-      <LastGenOutput>dbblog.cs</LastGenOutput>
-    </Content>
     <Content Include="Scripts\jquery-1.8.2.js" />
     <Content Include="Scripts\jquery-1.8.2.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
@@ -364,6 +326,7 @@
     <Content Include="Views\Home\Blog\NewEdit.cshtml" />
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Account\UserAddSuc.cshtml" />
+    <Content Include="Views\Account\ErrUserAdd.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

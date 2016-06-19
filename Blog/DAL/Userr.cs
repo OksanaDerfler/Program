@@ -32,7 +32,20 @@ namespace DAL
         }
 
         public bool CreateUser(Entities.Userr userr)
-        { 
+        {
+
+          var allusers =  new DAL.Userr().GetAllUsers();
+            try{
+          var tekuser = allusers.Where(p => p.UserName == userr.UserName).FirstOrDefault();
+          if (tekuser.Id > 0)
+          {
+              throw new NotImplementedException();
+          }
+            }
+            catch { goto outt; }
+
+
+
           using (SqlConnection connection = new SqlConnection(DAL.Recordd.conStr))
             {
                 SqlCommand command = new SqlCommand(@"Insert into userauth (UserName, Password)
@@ -42,6 +55,9 @@ namespace DAL
                 connection.Open();
                 return command.ExecuteNonQuery() == 1;
                 }
+
+            outt:;
+            return false;
         }
 
     }

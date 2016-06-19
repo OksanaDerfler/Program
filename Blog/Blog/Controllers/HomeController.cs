@@ -61,7 +61,7 @@ namespace Blog.Controllers
         [HttpPost]
         public ActionResult Index(Models.NewRecord record)
         {
-
+            Entities.Record Rec = new Entities.Record();
 
             if (string.IsNullOrEmpty(record.textarea) || string.IsNullOrEmpty(record.title) || string.IsNullOrEmpty(record.tag))
             {
@@ -75,36 +75,36 @@ namespace Blog.Controllers
 
             //Если данные прошли проверку, необходимо записать их в базу
 
-            Models.Record mr = new Models.Record();
-            mr.Title = record.title;
-            mr.Text = record.textarea;
+           // Models.Record mr = new Models.Record();
+            //mr.Title = record.title;
+           // mr.Text = record.textarea;
 
             if (HttpContext.User.Identity.IsAuthenticated)
             {
                 string login = HttpContext.User.Identity.Name;
-                mr.Nick = login;
+                Rec.Nick = login;
             }
             else
             {
-                mr.Nick = "Anonimous";
+                Rec.Nick = "Anonimous";
             }
 
 
             if (string.IsNullOrEmpty(record.tag))
-            { mr.Tag = "No"; }
-            else { mr.Tag = record.tag; }
+            { Rec.Tag = "No"; }
+            else { Rec.Tag = record.tag; }
 
-            mr.Like = 0;
-            mr.Dislike = 0;
-            mr.DateStart = DateTime.Now;
-
-
+           // mr.Like = 0;
+           // mr.Dislike = 0;
+           // mr.DateStart = DateTime.Now;
 
 
 
 
 
-            Entities.Record Rec = new Entities.Record();
+
+
+            
 
 
                 if (!(record.uplfile == null))
@@ -112,7 +112,7 @@ namespace Blog.Controllers
                     using (MemoryStream ms = new MemoryStream())
                     {
                         record.uplfile.InputStream.CopyTo(ms);
-                        mr.Picture = ms.ToArray();
+                        Rec.Picture = ms.ToArray();
 
                     }
                 }
@@ -123,9 +123,6 @@ namespace Blog.Controllers
             Rec.Text= record.textarea;
             Rec.DateStart = DateTime.Now;
             Rec.Like = 0;
-            Rec.Nick=mr.Nick;
-            Rec.Tag=mr.Tag;
-            Rec.Picture=mr.Picture;
 
 
             new DAL.Recordd().Create(Rec);
@@ -352,6 +349,7 @@ namespace Blog.Controllers
 
         public ActionResult LikeSearch(int id)
         {
+            /*
             using (Models.dbblog db = new Models.dbblog())
             {
                 //    //Забираем блоги
@@ -371,7 +369,7 @@ namespace Blog.Controllers
                 var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
                 ViewBag.tags = tags;
             }
-
+            */
             //Забираем фотографии из хранилища
             //var photoPath = ControllerContext.HttpContext.Server.MapPath(@"~/Photo");
             //var photoFilenames = Directory.GetFiles(photoPath);
@@ -382,6 +380,7 @@ namespace Blog.Controllers
 
         public ActionResult LikeRecords(int id)
         {
+            /*
             using (Models.dbblog db = new Models.dbblog())
             {
                 //    //Забираем блоги
@@ -396,8 +395,9 @@ namespace Blog.Controllers
                 var blogRecords = db.Records.Where(p => p.Id > 0).ToList().OrderByDescending(p => p.Id);
                 ViewBag.data = blogRecords;
             }
+             * */
             return View("Blog/Records");
-
+            
         }
 
         public ActionResult OpenProfile(string username)

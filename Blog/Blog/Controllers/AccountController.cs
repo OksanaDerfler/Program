@@ -118,11 +118,14 @@ namespace Blog.Controllers
                     us.UserName = model.UserName;
                     us.Password = model.Password;
 
-                    new DAL.Userr().CreateUser(us);
+                    var boolAdd = new DAL.Userr().CreateUser(us);
+                    if (boolAdd)
+                    { return View("UserAddSuc"); }
+                    else { return View("ErrUserAdd"); }
                     //WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
                     // WebSecurity.Login(model.UserName, model.Password);
                     //return RedirectToAction("UserAddSuc", "Home");
-                    return View("UserAddSuc");
+                    
 
                 }
                 catch (MembershipCreateUserException e)
