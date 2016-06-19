@@ -30,5 +30,19 @@ namespace DAL
 
             }
         }
+
+        public bool CreateUser(Entities.Userr userr)
+        { 
+          using (SqlConnection connection = new SqlConnection(DAL.Recordd.conStr))
+            {
+                SqlCommand command = new SqlCommand(@"Insert into userauth (UserName, Password)
+                 values (@UserName, @Password)", connection);
+                command.Parameters.AddWithValue("@UserName", userr.UserName);
+                command.Parameters.AddWithValue("@Password", userr.Password);                
+                connection.Open();
+                return command.ExecuteNonQuery() == 1;
+                }
+        }
+
     }
 }

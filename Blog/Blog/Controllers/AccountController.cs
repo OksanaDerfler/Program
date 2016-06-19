@@ -114,9 +114,16 @@ namespace Blog.Controllers
                 // Попытка зарегистрировать пользователя
                 try
                 {
-                    WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
-                    WebSecurity.Login(model.UserName, model.Password);
-                    return RedirectToAction("Index", "Home");
+                    Entities.Userr us = new Entities.Userr();
+                    us.UserName = model.UserName;
+                    us.Password = model.Password;
+
+                    new DAL.Userr().CreateUser(us);
+                    //WebSecurity.CreateUserAndAccount(model.UserName, model.Password);
+                    // WebSecurity.Login(model.UserName, model.Password);
+                    //return RedirectToAction("UserAddSuc", "Home");
+                    return View("UserAddSuc");
+
                 }
                 catch (MembershipCreateUserException e)
                 {

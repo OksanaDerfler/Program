@@ -22,5 +22,6 @@ namespace Interfaces
     public interface IUserr
     {
         IEnumerable<Entities.Userr> GetAllUsers();
+        bool CreateUser(Entities.Userr user);
     }
 }
