@@ -35,14 +35,48 @@ namespace Blog.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Login(LoginModel model, string returnUrl)
         {
-            if (ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe))
+            //Здесь проверяем на аутентификацию и перебрасываем на личный кабинет!
+            //ModelState.IsValid && WebSecurity.Login(model.UserName, model.Password, persistCookie: model.RememberMe
+
+            try
             {
-                return RedirectToLocal(returnUrl);
+                if (ModelState.IsValid)
+                {
+                    var alluser = new DAL.Userr().GetAllUsers();
+                    var usrec = alluser.Where(p => p.UserName == model.UserName).FirstOrDefault();
+                    if (usrec.Password == model.Password)
+                    {
+                        //Здесь необходимо аутентифицировать пользователя в системе и передать его ник в глобал
+                        FormsAuthentication.SetAuthCookie(model.UserName, true);
+                        return RedirectToAction("Index", "Home");
+                       // return RedirectToAction("OpenProfile", "Home", new { id = "logggii" });
+                    }
+                }
+                else { ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно."); return View(model); }
+            }
+            catch { ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно."); return View(model); }
+
+
+            ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно."); return View(model);
+            /*
+            { 
+            
+            }
+
+            if (ModelState.IsValid)
+            {
+                return RedirectToAction("OpenProfile", "Home");
+                // return RedirectToLocal(returnUrl);
+            }
+
+            else { 
+            //Что если пароль не совпал
             }
 
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
             ModelState.AddModelError("", "Имя пользователя или пароль указаны неверно.");
             return View(model);
+            */
         }
 
         //
@@ -52,7 +86,8 @@ namespace Blog.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult LogOff()
         {
-            WebSecurity.Logout();
+            FormsAuthentication.SignOut();
+            //WebSecurity.Logout();
 
             return RedirectToAction("Index", "Home");
         }
@@ -128,13 +163,17 @@ namespace Blog.Controllers
             //Здесь открываем страницу с профилем, в которую мы грузим сообщения пользователя 
             //с возможностью их редактирования
 
-            using (Models.dbblog db = new Models.dbblog())
-            {
+          //  using (Models.dbblog db = new Models.dbblog())
+          //  {
+          //      var rr = User.Identity.Name;
                 //Забираем последние блоги по записям
-                var blogRecords = db.Records.Where(p => p.Nick == User.Identity.Name).ToList().OrderByDescending(p => p.Id);
-                ViewBag.data = blogRecords;
-            }
+                //var blogRecords = db.Records.Where(p => p.Nick == User.Identity.Name).ToList().OrderByDescending(p => p.Id);
+          //      ViewBag.data = blogRecords;
+          //  }
 
+            var allrec = new DAL.Recordd().GetAll();
+            var blogRecords = allrec.Where(p => p.Nick == User.Identity.Name).ToList().OrderByDescending(p => p.Id);
+            ViewBag.data = blogRecords;
 
             return View("Profile");
 
@@ -358,7 +397,7 @@ namespace Blog.Controllers
             }
             else
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("OpenProfile", "Home");
             }
         }
 

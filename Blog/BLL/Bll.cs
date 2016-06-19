@@ -13,5 +13,7 @@ namespace BLL
             var db = new DAL.Recordd().GetAll();
             return db.Select(p => p.Tag).Distinct().ToList();
         }
+
+
     }
 }

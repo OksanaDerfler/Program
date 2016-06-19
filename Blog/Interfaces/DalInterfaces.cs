@@ -16,4 +16,10 @@ namespace Interfaces
         bool Update(int id);
         bool Delete(int id);
     }
+
+
+    public interface IUserr
+    {
+        IEnumerable<Entities.Userr> GetAllUsers();
+    }
 }

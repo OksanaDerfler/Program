@@ -26,19 +26,22 @@ namespace Blog.Filters
             public SimpleMembershipInitializer()
             {
                 Database.SetInitializer<UsersContext>(null);
-
+                
                 try
                 {
+                    /*
                     using (var context = new UsersContext())
                     {
                         if (!context.Database.Exists())
                         {
                             // Создание базы данных SimpleMembership без схемы миграции Entity Framework
-                            ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
+                          //  ((IObjectContextAdapter)context).ObjectContext.CreateDatabase();
                         }
                     }
 
                     WebSecurity.InitializeDatabaseConnection("DefaultConnection", "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    //WebSecurity.InitializeDatabaseConnection(DAL.Recordd.conStr, "UserProfile", "UserId", "UserName", autoCreateTables: true);
+                    */
                 }
                 catch (Exception ex)
                 {

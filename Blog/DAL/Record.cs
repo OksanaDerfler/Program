@@ -67,7 +67,37 @@ namespace DAL
 
         public bool Create(Entities.Record record)
         {
-            return false;
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                if (record.Picture == null)
+                {
+                    SqlCommand command = new SqlCommand(@"Insert into records (Title, Text, DateStart, Tag, [Like], Nick )
+                 values (@Title, @Text, @DateStart, @Tag, @Like, @Nick)", connection);
+                    command.Parameters.AddWithValue("@Title", record.Title);
+                    command.Parameters.AddWithValue("@Text", record.Text);
+                    command.Parameters.AddWithValue("@DateStart", record.DateStart);
+                    command.Parameters.AddWithValue("@Tag", record.Tag);
+                    command.Parameters.AddWithValue("@Like", record.Like);
+                    command.Parameters.AddWithValue("@Nick", record.Nick);                    
+                    connection.Open();
+                    return command.ExecuteNonQuery() == 1;
+                }
+                else
+                {
+                    SqlCommand command = new SqlCommand(@"Insert into records (Title, Text, DateStart, Tag, Nick, [Like], Picture)
+                 values (@Title, @Text, @DateStart, @Tag, @Nick, @Like, @Picture)", connection);
+                    command.Parameters.AddWithValue("@Title", record.Title);
+                    command.Parameters.AddWithValue("@Text", record.Text);
+                    command.Parameters.AddWithValue("@DateStart", record.DateStart);
+                    command.Parameters.AddWithValue("@Tag", record.Tag);
+                    command.Parameters.AddWithValue("@Nick", record.Nick);
+                    command.Parameters.AddWithValue("@Like", record.Like);
+                    command.Parameters.AddWithValue("@Picture", record.Picture);
+                    connection.Open();
+                    return command.ExecuteNonQuery() == 1;
+                }
+
+            }
         }
 
         public bool Update(int id)
@@ -79,5 +109,31 @@ namespace DAL
         {
             return false;
         }
+
+        public IEnumerable<Record> Search (string searTag)
+        { 
+          using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                SqlCommand command = new SqlCommand("Select * from records where tag like '%спорт%'", connection);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                 yield return new Record()
+                 { 
+                     Id = (int)reader["Id"],
+                     Title = (string)reader["Title"],
+                     Text = (string)reader["Text"],
+                     DateStart = (DateTime)reader["DateStart"],
+                     Tag = (string)reader["Tag"],
+                     Like = (int)reader["Like"],
+                     Nick = (string)reader["Nick"],
+                     Picture = (object)reader["Picture"]
+                 };
+                }
+                
+            }
+        }
+
     }
 }

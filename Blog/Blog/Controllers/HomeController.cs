@@ -98,7 +98,39 @@ namespace Blog.Controllers
             mr.Dislike = 0;
             mr.DateStart = DateTime.Now;
 
-            // int newRecord = 0;
+
+
+
+
+
+
+            Entities.Record Rec = new Entities.Record();
+
+
+                if (!(record.uplfile == null))
+                {
+                    using (MemoryStream ms = new MemoryStream())
+                    {
+                        record.uplfile.InputStream.CopyTo(ms);
+                        mr.Picture = ms.ToArray();
+
+                    }
+                }
+
+
+
+            Rec.Title=record.title;
+            Rec.Text= record.textarea;
+            Rec.DateStart = DateTime.Now;
+            Rec.Like = 0;
+            Rec.Nick=mr.Nick;
+            Rec.Tag=mr.Tag;
+            Rec.Picture=mr.Picture;
+
+
+            new DAL.Recordd().Create(Rec);
+
+            /*
             using (Models.dbblog db = new Models.dbblog())
             {
                 // newRecord = db.Records.Max(p => p.Id);
@@ -119,9 +151,11 @@ namespace Blog.Controllers
                     db.Records.Add(mr);
                     db.SaveChanges();
                 }
+            }
+                */
 
                 return View("Blog/AddNotification");
-            }
+            
         }
         /// <summary>
         /// Метод на поиск записей по тегам
@@ -144,6 +178,7 @@ namespace Blog.Controllers
                 ViewBag.data = null;
                 return View("Blog/Search");
             }
+
             var blogRecords = new DAL.Recordd().GetAll();
             ViewBag.data = blogRecords.Where(p => p.Tag.Contains(sear.search)).ToList().OrderByDescending(p => p.Id);
 
@@ -303,7 +338,6 @@ namespace Blog.Controllers
             return View("Blog/Home");
         }
 
-
         public ActionResult LikeRecords(int id)
         {
             using (Models.dbblog db = new Models.dbblog())
@@ -323,6 +357,12 @@ namespace Blog.Controllers
             return View("Blog/Records");
 
         }
+
+        public ActionResult OpenProfile(string username)
+        {
+            return View("Blog/Profile");
+        }
+
 
     }
 }

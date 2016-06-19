@@ -308,7 +308,9 @@
     <Content Include="Scripts\knockout-2.2.0.debug.js" />
     <Content Include="Scripts\knockout-2.2.0.js" />
     <Content Include="Scripts\modernizr-2.6.2.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -348,7 +350,7 @@
     <Content Include="Views\Home\Blog\Registration.cshtml" />
     <Content Include="Views\Home\Blog\NewRecord.cshtml" />
     <Content Include="Views\Home\Blog\Login.cshtml" />
-    <Content Include="Views\Account\Profile.cshtml" />
+    <Content Include="Views\Home\Blog\Profile.cshtml" />
     <Content Include="Views\Home\Blog\Rules.cshtml" />
     <Content Include="Views\Home\Blog\Error.cshtml" />
     <Content Include="Views\Home\Blog\AddNotification.cshtml" />
@@ -357,6 +359,7 @@
     <Content Include="Views\Home\Blog\Search.cshtml" />
     <Content Include="Views\Account\Edit.cshtml" />
     <Content Include="Views\Home\Blog\NewEdit.cshtml" />
+    <Content Include="Views\Account\Profile.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
