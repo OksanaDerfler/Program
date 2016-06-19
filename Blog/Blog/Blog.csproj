@@ -206,6 +206,9 @@
       <DependentUpon>dbblog.edmx</DependentUpon>
     </Compile>
     <Compile Include="Models\EditRecord.cs" />
+    <Compile Include="Models\Like.cs">
+      <DependentUpon>dbblog.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\NewRecord.cs" />
     <Compile Include="Models\Record.cs">
       <DependentUpon>dbblog.tt</DependentUpon>

@@ -25,6 +25,7 @@ namespace Blog.Models
             throw new UnintentionalCodeFirstException();
         }
     
+        public DbSet<Like> Likes { get; set; }
         public DbSet<Record> Records { get; set; }
     }
 }

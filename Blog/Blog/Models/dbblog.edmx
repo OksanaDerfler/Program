@@ -4,7 +4,16 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-    <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+      <Schema Namespace="Хранилище Model" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Like">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" Nullable="false" />
+          <Property Name="Owner" Type="nvarchar" MaxLength="150" />
+          <Property Name="Nick" Type="nvarchar" MaxLength="150" />
+          <Property Name="Like" Type="nvarchar" MaxLength="150" />
+        </EntityType>
         <EntityType Name="Records">
           <Key>
             <PropertyRef Name="Id" />
@@ -20,12 +29,23 @@
           <Property Name="Picture" Type="varbinary(max)" />
         </EntityType>
         <EntityContainer Name="Хранилище ModelContainer">
+          <EntitySet Name="Like" EntityType="Self.Like" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Records" EntityType="Self.Records" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema></edmx:StorageModels>
+      </Schema>
+    </edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="Model" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Like">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" />
+          <Property Name="Owner" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Nick" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="Like1" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+        </EntityType>
         <EntityType Name="Record">
           <Key>
             <PropertyRef Name="Id" />
@@ -41,6 +61,7 @@
           <Property Name="Picture" Type="Binary" MaxLength="Max" FixedLength="false" />
         </EntityType>
         <EntityContainer Name="dbblog" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Likes" EntityType="Self.Like" />
           <EntitySet Name="Records" EntityType="Self.Record" />
         </EntityContainer>
       </Schema>
@@ -49,11 +70,19 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище ModelContainer" CdmEntityContainer="dbblog">
+          <EntitySetMapping Name="Likes">
+            <EntityTypeMapping TypeName="Model.Like">
+              <MappingFragment StoreEntitySet="Like">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <ScalarProperty Name="Owner" ColumnName="Owner" />
+                <ScalarProperty Name="Nick" ColumnName="Nick" />
+                <ScalarProperty Name="Like1" ColumnName="Like" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Records">
             <EntityTypeMapping TypeName="Model.Record">
               <MappingFragment StoreEntitySet="Records">
-                <ScalarProperty Name="Picture" ColumnName="Picture" />
-                <ScalarProperty Name="Nick" ColumnName="Nick" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Title" ColumnName="Title" />
                 <ScalarProperty Name="Text" ColumnName="Text" />
@@ -61,6 +90,8 @@
                 <ScalarProperty Name="Tag" ColumnName="Tag" />
                 <ScalarProperty Name="Like" ColumnName="Like" />
                 <ScalarProperty Name="Dislike" ColumnName="Dislike" />
+                <ScalarProperty Name="Nick" ColumnName="Nick" />
+                <ScalarProperty Name="Picture" ColumnName="Picture" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
