@@ -311,6 +311,11 @@ namespace Blog.Controllers
 
         public ActionResult Like(int id)
         {
+            if (User.Identity.IsAuthenticated)
+            {
+                new DAL.Recordd().Like(id);
+            }
+            /*
             using (Models.dbblog db = new Models.dbblog())
             {
             //    //Забираем блоги
@@ -331,7 +336,18 @@ namespace Blog.Controllers
                 var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
                 ViewBag.tags = tags;
             }
+            */
+
+            var tagDistinct = new Bll().GetDistinctTags().OrderBy(p => p);
+            ViewBag.tags = tagDistinct;
+            var blogRecords = new DAL.Recordd().GetAll();
+            var maxint = blogRecords.Max(p => p.Id);
+            blogRecords = blogRecords.Where(p => p.Id > maxint - 7).ToList().OrderByDescending(p => p.Id);
+            ViewBag.data = blogRecords;
+
             return View("Blog/Home");
+            
+
         }
 
         public ActionResult LikeSearch(int id)

@@ -15,6 +15,7 @@ namespace Interfaces
         bool Create(Record record);
         bool Update(Entities.Record record);
         bool Delete(int id);
+        bool Like(int ID);
     }
 
 

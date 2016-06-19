@@ -164,5 +164,32 @@ namespace DAL
             }
         }
 
+        public bool Like(int ID)
+        {
+            int like = 0;
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                SqlCommand command = new SqlCommand("Select * from records where Id=@Id", connection);
+                command.Parameters.AddWithValue("@Id", ID);
+                connection.Open();
+                var reader = command.ExecuteReader();
+                while (reader.Read())
+                {
+                    like = (int)reader["Like"];
+                }
+            } 
+
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                    SqlCommand command = new SqlCommand(@"Update records set [Like]=@Like where Id=@Id", connection);
+                    command.Parameters.AddWithValue("@Id", ID);
+                    like++;
+                    command.Parameters.AddWithValue("@Like", like);
+                    connection.Open();
+                    return command.ExecuteNonQuery() == 1;               
+            }
+        }
+
+
     }
 }
