@@ -184,12 +184,12 @@ namespace Blog.Controllers
             //Здесь открываем страницу с профилем, а который мы грузим сообщения пользователя с возможностью их редактирования
 
             
-            ViewBag.StatusMessage =
-                message == ManageMessageId.ChangePasswordSuccess ? "Пароль изменен."
-                : message == ManageMessageId.SetPasswordSuccess ? "Пароль задан."
-                : message == ManageMessageId.RemoveLoginSuccess ? "Внешняя учетная запись удалена."
-                : "";
-            ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+          //  ViewBag.StatusMessage =
+           //     message == ManageMessageId.ChangePasswordSuccess ? "Пароль изменен."
+           //     : message == ManageMessageId.SetPasswordSuccess ? "Пароль задан."
+           //     : message == ManageMessageId.RemoveLoginSuccess ? "Внешняя учетная запись удалена."
+            //    : "";
+           // ViewBag.HasLocalPassword = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
             ViewBag.ReturnUrl = Url.Action("Manage");
             return View("Manage");
             
@@ -468,6 +468,7 @@ namespace Blog.Controllers
 
         public ActionResult Delete(string Id)
         {
+            /*
             //Удаляем запись из базы
             using (Models.dbblog db = new Models.dbblog())
             {
@@ -482,6 +483,13 @@ namespace Blog.Controllers
                 ViewBag.data = blogRecords;
             }
 
+            */
+
+            new DAL.Recordd().Delete(int.Parse(Id));
+            var allrec = new DAL.Recordd().GetAll();
+            var blogRecords = allrec.Where(p => p.Nick == User.Identity.Name).ToList().OrderByDescending(p => p.Id);
+            ViewBag.data = blogRecords;
+
             return View("Profile");
         }
 
@@ -490,6 +498,8 @@ namespace Blog.Controllers
         {
              //Открываем страницу для изменения записи
             //Забираем данные по записи из БД
+
+            /*
             using (Models.dbblog db = new Models.dbblog())
             {
                 Int32 tekid = Convert.ToInt32(Id);
@@ -498,6 +508,11 @@ namespace Blog.Controllers
                 ViewBag.record = record;
 
             }
+            */
+            Int32 tekid = Convert.ToInt32(Id);
+            var records = new DAL.Recordd().GetAll();
+            var record = records.Where(o => o.Id == tekid).FirstOrDefault();
+            ViewBag.record = record;
 
             return View("Edit");
         }

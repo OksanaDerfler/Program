@@ -188,6 +188,7 @@ namespace Blog.Controllers
         [HttpPost]
         public ActionResult Edit(Models.EditRecord edrecord)
         {
+            /*
             using (Models.dbblog db = new Models.dbblog())
             {
                 //Здесь передадутся данные из базы в форму изменения записи
@@ -209,6 +210,31 @@ namespace Blog.Controllers
 
                 db.SaveChanges();
             }
+             */
+
+            Entities.Record er = new Entities.Record();
+
+            if (!(edrecord.uplfile == null))
+            {
+                using (MemoryStream ms = new MemoryStream())
+                {
+                    edrecord.uplfile.InputStream.CopyTo(ms);
+                    er.Picture = ms.ToArray();
+                }
+            }
+
+         
+            er.Id = edrecord.idrec;
+            er.Tag = edrecord.tag;
+            er.Text = edrecord.textarea;
+            //er.Picture = edrecord.uplfile;
+            er.Title = edrecord.title;
+
+
+            var ans = new DAL.Recordd().Update(er);
+
+
+
             return View("Blog/NewEdit");
         }
 

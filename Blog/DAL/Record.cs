@@ -100,14 +100,43 @@ namespace DAL
             }
         }
 
-        public bool Update(int id)
+        public bool Update(Entities.Record record)
         {
-            return false;
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                if (record.Picture == null)
+                {
+                    SqlCommand command = new SqlCommand(@"Update records set Title=@Title, Text=@Text, Tag=@Tag where Id=@Id", connection);
+                    command.Parameters.AddWithValue("@Id", record.Id);
+                    command.Parameters.AddWithValue("@Title", record.Title);
+                    command.Parameters.AddWithValue("@Text", record.Text);
+                    command.Parameters.AddWithValue("@Tag", record.Tag);
+                    connection.Open();
+                    return command.ExecuteNonQuery() == 1;
+                }
+                else
+                {
+                    SqlCommand command = new SqlCommand(@"Update records set Title=@Title, Text=@Text,  Tag=@Tag, Picture=@Picture where Id=@Id", connection);
+                    command.Parameters.AddWithValue("@Id", record.Id);
+                    command.Parameters.AddWithValue("@Title", record.Title);
+                    command.Parameters.AddWithValue("@Text", record.Text);
+                    command.Parameters.AddWithValue("@Tag", record.Tag);
+                    command.Parameters.AddWithValue("@Picture", record.Picture);
+                    connection.Open();
+                    return command.ExecuteNonQuery() == 1;
+                }
+            }
         }
 
         public bool Delete(int id)
         {
-            return false;
+            using (SqlConnection connection = new SqlConnection(conStr))
+            {
+                SqlCommand command = new SqlCommand(@"Delete from records where Id=@Id", connection);
+                command.Parameters.AddWithValue("@Id", id);
+                connection.Open();
+                return command.ExecuteNonQuery() == 1;
+            }
         }
 
         public IEnumerable<Record> Search (string searTag)

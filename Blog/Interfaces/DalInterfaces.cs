@@ -13,7 +13,7 @@ namespace Interfaces
         IEnumerable<Record> GetAll();
         Record Get(int id);
         bool Create(Record record);
-        bool Update(int id);
+        bool Update(Entities.Record record);
         bool Delete(int id);
     }
 
