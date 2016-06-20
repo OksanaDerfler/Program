@@ -11,6 +11,7 @@
 </head>
 <body>
     <div style="border: solid 1px; padding: 10px; text-align:center">
+        @Html.ActionLink("Вернуться на главную страницу", "Index", "Home")
         <form action="/Home/Edit" method="post" enctype="multipart/form-data">
             <input type="text" name="idrec" value="@ViewBag.record.Id" hidden="hidden"/>
             <h4 style="text-align:center">Изменить запись:</h4>
@@ -21,10 +22,22 @@
             <p></p>
             <input type="text" name="tag" value="@ViewBag.record.Tag" />
             <p></p>
+
+            @{
+                if (!Convert.IsDBNull(@ViewBag.record.Picture))
+                {  <div>
+                    <img src="data:image;base64,@Convert.ToBase64String(@ViewBag.record.Picture)" style="margin-right: 310px; height:150px; width:150px" />
+                </div>
+                }
+            }
+
             Сменить jpeg картинку <p></p> <input type="file" name="uplfile" />
             <p></p>
             <input type="submit" name="EditREcord" value="Изменить запись" />
         </form>
+        <p></p>
+
+
     </div>
 </body>
 </html>
