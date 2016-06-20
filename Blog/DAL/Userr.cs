@@ -60,5 +60,18 @@ namespace DAL
             return false;
         }
 
+        public bool ChangePassword(Entities.Userr userr)
+        {
+            using (SqlConnection connection = new SqlConnection(DAL.Recordd.conStr))
+            {
+                SqlCommand command = new SqlCommand(@"Update userauth set [Password]=@Password where [UserName]=@UserName"
+                , connection);
+                command.Parameters.AddWithValue("@UserName", userr.UserName);
+                command.Parameters.AddWithValue("@Password", userr.Password);
+                connection.Open();
+                return command.ExecuteNonQuery() == 1;
+            }
+        }
+
     }
 }

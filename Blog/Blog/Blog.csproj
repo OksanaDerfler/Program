@@ -327,6 +327,7 @@
     <Content Include="Views\Account\Profile.cshtml" />
     <Content Include="Views\Account\UserAddSuc.cshtml" />
     <Content Include="Views\Account\ErrUserAdd.cshtml" />
+    <Content Include="Views\Account\ChangePassCorr.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

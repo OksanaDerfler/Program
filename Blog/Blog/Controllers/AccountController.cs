@@ -214,14 +214,25 @@ namespace Blog.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Manage(LocalPasswordModel model)
         {
-            bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
-            ViewBag.HasLocalPassword = hasLocalAccount;
-            ViewBag.ReturnUrl = Url.Action("Manage");
-            if (hasLocalAccount)
+            //Смена пароля тут
+
+           // bool hasLocalAccount = OAuthWebSecurity.HasLocalAccount(WebSecurity.GetUserId(User.Identity.Name));
+           // ViewBag.HasLocalPassword = hasLocalAccount;
+           // ViewBag.ReturnUrl = Url.Action("Manage");
+           // if (hasLocalAccount)
+           // {
+            if (ModelState.IsValid)
             {
-                if (ModelState.IsValid)
-                {
+                Entities.Userr us = new Entities.Userr();
+                us.Password = model.NewPassword;
+                us.UserName = User.Identity.Name;
+                new DAL.Userr().ChangePassword(us);
+                return View("ChangePassCorr");
+            }
+            else { return View(model); }
+                    //Смена пароля тут
                     // В ряде случаев при сбое ChangePassword породит исключение, а не вернет false.
+                    /*
                     bool changePasswordSucceeded;
                     try
                     {
@@ -241,7 +252,9 @@ namespace Blog.Controllers
                         ModelState.AddModelError("", "Неправильный текущий пароль или недопустимый новый пароль.");
                     }
                 }
-            }
+            */
+          //  }
+        /*
             else
             {
                 // У пользователя нет локального пароля, уберите все ошибки проверки, вызванные отсутствующим
@@ -265,9 +278,9 @@ namespace Blog.Controllers
                     }
                 }
             }
-
+        */
             // Появление этого сообщения означает наличие ошибки; повторное отображение формы
-            return View(model);
+            
         }
 
         //

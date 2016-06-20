@@ -6,14 +6,21 @@ using System.Threading.Tasks;
 using Interfaces;
 using Entities;
 using System.Data.SqlClient;
+using System.Configuration;
 
 
 namespace DAL
 {
     public class Recordd:IRecord
     {
-        public const string conStr = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=d:\Distrib\Develop\DerfLer\Blog\Blog\App_Data\aspnet-Blog-20160526232425.mdf;Integrated Security=True";
+        public static string conStr=""; // = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=d:\Distrib\Develop\DerfLer\Blog\Blog\App_Data\aspnet-Blog-20160526232425.mdf;Integrated Security=True";
         
+
+        public Recordd()
+        {
+            conStr = ConfigurationManager.ConnectionStrings["ConStr"].ConnectionString;
+        }
+
         public IEnumerable<Entities.Record> GetAll()
         {
             using (SqlConnection connection = new SqlConnection(conStr))
