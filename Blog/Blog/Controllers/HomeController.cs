@@ -52,7 +52,6 @@ namespace Blog.Controllers
             return View("Blog/Home");
         }
 
-
         /// <summary>
         /// Метод принимающий данные от пользователя и обрабатывающий их
         /// </summary>
@@ -73,11 +72,6 @@ namespace Blog.Controllers
                 return View("Blog/ErrorLowLength");
             }
 
-            //Если данные прошли проверку, необходимо записать их в базу
-
-           // Models.Record mr = new Models.Record();
-            //mr.Title = record.title;
-           // mr.Text = record.textarea;
 
             if (HttpContext.User.Identity.IsAuthenticated)
             {
@@ -93,18 +87,6 @@ namespace Blog.Controllers
             if (string.IsNullOrEmpty(record.tag))
             { Rec.Tag = "No"; }
             else { Rec.Tag = record.tag; }
-
-           // mr.Like = 0;
-           // mr.Dislike = 0;
-           // mr.DateStart = DateTime.Now;
-
-
-
-
-
-
-
-            
 
 
                 if (!(record.uplfile == null))
@@ -127,30 +109,6 @@ namespace Blog.Controllers
 
             new DAL.Recordd().Create(Rec);
 
-            /*
-            using (Models.dbblog db = new Models.dbblog())
-            {
-                // newRecord = db.Records.Max(p => p.Id);
-                if (!(record.uplfile == null))
-                {
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        record.uplfile.InputStream.CopyTo(ms);
-                        mr.Picture = ms.ToArray();
-
-                    }
-
-                    db.Records.Add(mr);
-                    db.SaveChanges();
-                }
-                else
-                {
-                    db.Records.Add(mr);
-                    db.SaveChanges();
-                }
-            }
-                */
-
                 return View("Blog/AddNotification");
             
         }
@@ -162,14 +120,7 @@ namespace Blog.Controllers
         [HttpPost]
         public ActionResult Search(Models.Search sear)
         {
-            /*
-            using (Models.dbblog db = new Models.dbblog())
-            {
-                //Забираем блоги
-                var blogRecords = db.Records.Where(p => p.Tag.Contains(sear.search)).ToList().OrderByDescending(p => p.Id);
-                ViewBag.data = blogRecords;
-            }
-            */
+
             if (sear.search == null)
             {
                 ViewBag.data = null;
@@ -185,29 +136,6 @@ namespace Blog.Controllers
         [HttpPost]
         public ActionResult Edit(Models.EditRecord edrecord)
         {
-            /*
-            using (Models.dbblog db = new Models.dbblog())
-            {
-                //Здесь передадутся данные из базы в форму изменения записи
-                //Заменяем данные
-                Record rec = db.Records.Find(edrecord.idrec);
-                rec.Title = edrecord.title;
-                rec.Text = edrecord.textarea;
-                rec.Tag = edrecord.tag;
-
-                //Если есть картинка, то тоже заменяем
-                if (!(edrecord.uplfile == null))
-                {
-                    using (MemoryStream ms = new MemoryStream())
-                    {
-                        edrecord.uplfile.InputStream.CopyTo(ms);
-                        rec.Picture = ms.ToArray();
-                    }
-                }
-
-                db.SaveChanges();
-            }
-             */
 
             Entities.Record er = new Entities.Record();
 
@@ -224,7 +152,6 @@ namespace Blog.Controllers
             er.Id = edrecord.idrec;
             er.Tag = edrecord.tag;
             er.Text = edrecord.textarea;
-            //er.Picture = edrecord.uplfile;
             er.Title = edrecord.title;
 
 
@@ -258,15 +185,6 @@ namespace Blog.Controllers
         /// <returns></returns>
         public ActionResult Records()
         {
-            /*
-            using (Models.dbblog db = new Models.dbblog())
-            {
-                //Забираем блоги
-                var blogRecords = db.Records.Where(p => p.Id > 0).ToList().OrderByDescending(p => p.Id);
-                ViewBag.data = blogRecords;
-            }
-            */
-
             var blogRecords = new DAL.Recordd().GetAll();
             ViewBag.data = blogRecords.ToList();
 
@@ -275,14 +193,6 @@ namespace Blog.Controllers
 
         public ActionResult TagRedirect(string id)
         {
-           // using (Models.dbblog db = new Models.dbblog())
-           // {
-                //Забираем блоги
-                //var blogRecords = db.Records.Where(p => p.Tag == id).ToList();
-                //var blogRecords = db.Records.Where(p => p.Id > 0).ToList().OrderByDescending(p => p.Id);
-           //     ViewBag.data = blogRecords;
-            //}
-
             var blogRecords = new DAL.Recordd().GetAll();
             ViewBag.data = blogRecords.Where(p => p.Tag == id).ToList();
 
@@ -291,15 +201,6 @@ namespace Blog.Controllers
 
         public ActionResult NameRedirect(string id)
         {
-            /*
-            using (Models.dbblog db = new Models.dbblog())
-            {
-                //Забираем блоги
-                var blogRecords = db.Records.Where(p => p.Nick == id).ToList();
-                ViewBag.data = blogRecords;
-            }
-            */
-
             var blogRecords = new DAL.Recordd().GetAll();
             ViewBag.data = blogRecords.Where(p => p.Nick == id).ToList();
 
@@ -312,28 +213,6 @@ namespace Blog.Controllers
             {
                 new DAL.Recordd().Like(id);
             }
-            /*
-            using (Models.dbblog db = new Models.dbblog())
-            {
-            //    //Забираем блоги
-                var blogRecords = db.Records.Find(id);
-                blogRecords.Like = blogRecords.Like + 1;
-                db.SaveChanges();
-            }
-
-
-
-            using (Models.dbblog db = new Models.dbblog())
-            {
-                //Забираем последние блоги по записям
-                var maxint = db.Records.Max(p => p.Id);
-                // var blogRecords = db.Records.Where(p => p.Id > maxint - 3).ToList().OrderByDescending(p => p.Id);
-                var blogRecords = db.Records.ToList().OrderByDescending(p => p.Id);
-                ViewBag.data = blogRecords;
-                var tags = db.Records.Select(p => p.Tag).Distinct().ToList();
-                ViewBag.tags = tags;
-            }
-            */
 
             var tagDistinct = new Bll().GetDistinctTags().OrderBy(p => p);
             ViewBag.tags = tagDistinct;
@@ -342,9 +221,7 @@ namespace Blog.Controllers
             blogRecords = blogRecords.Where(p => p.Id > maxint - 7).ToList().OrderByDescending(p => p.Id);
             ViewBag.data = blogRecords;
 
-            return View("Blog/Home");
-            
-
+            return View("Blog/Home");            
         }
 
         public ActionResult LikeSearch(int id)

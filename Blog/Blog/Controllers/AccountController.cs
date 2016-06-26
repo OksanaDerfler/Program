@@ -230,6 +230,7 @@ namespace Blog.Controllers
                 return View("ChangePassCorr");
             }
             else { return View(model); }
+
                     //Смена пароля тут
                     // В ряде случаев при сбое ChangePassword породит исключение, а не вернет false.
                     /*
@@ -522,16 +523,6 @@ namespace Blog.Controllers
              //Открываем страницу для изменения записи
             //Забираем данные по записи из БД
 
-            /*
-            using (Models.dbblog db = new Models.dbblog())
-            {
-                Int32 tekid = Convert.ToInt32(Id);
-
-                Record record = db.Records.Where(o => o.Id == tekid).FirstOrDefault();
-                ViewBag.record = record;
-
-            }
-            */
             Int32 tekid = Convert.ToInt32(Id);
             var records = new DAL.Recordd().GetAll();
             var record = records.Where(o => o.Id == tekid).FirstOrDefault();
