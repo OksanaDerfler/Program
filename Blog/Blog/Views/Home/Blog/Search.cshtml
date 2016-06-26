@@ -10,51 +10,47 @@
     <title>AllRecord</title>
 </head>
 <body>
-    <div>
+    <div class="BlogData" style="float:left; text-align: center; width: 40%; margin-left: 5px; overflow-y: auto">
         @Html.ActionLink("Вернуться на главную", "Index", "Home")
         <h1>Найденные записи:</h1>
         @{
             if (!(ViewBag.data == null))
-            { 
-            //Вставка записей блогов
-            foreach (var blogs in ViewBag.data)
             {
-                string ss = "";
-                ss = @blogs.Tag;
+                //Вставка записей блогов
+                foreach (var blogs in ViewBag.data)
+                {
+                    string ss = "";
+                    ss = @blogs.Tag;
 
-                string nickanme = "";
-                nickanme = @blogs.Nick;
-                
-                <div style="margin-bottom: 5px; padding: 5px; background-color: #fff; border: solid 1px rgba(0, 0, 0, 0.22)">
-                    <div>
-                        <div style="float: left">@Html.ActionLink("@" + nickanme, "NameRedirect", "Home", new { id = nickanme }, new { id = nickanme })</div>
-                        <div style="float: right">@blogs.DateStart.ToString("d MMM yyyy")</div>
+                    string nickanme = "";
+                    nickanme = @blogs.Nick;
+
+                    <div style="margin-bottom: 5px; padding: 5px; background-color: #fff; border: solid 1px rgba(0, 0, 0, 0.22)">
+                        <div>
+                            <div style="float: left">@Html.ActionLink("@" + nickanme, "NameRedirect", "Home", new { id = nickanme }, new { id = nickanme })</div>
+                            <div style="float: right">@blogs.DateStart.ToString("d MMM yyyy")</div>
+                        </div>
+                        <h4>@blogs.Title</h4>
+                        <p></p>
+                        <p>@blogs.Text</p>
+
+                        @{
+                    if (!Convert.IsDBNull(@blogs.Picture))
+                    {  <div>
+                        <img src="data:image;base64,@Convert.ToBase64String(@blogs.Picture)" style="margin-right: 310px; height:50px; width:50px" />
                     </div>
-                    <h4>@blogs.Title</h4>
-                    <p></p>
-                    <p>@blogs.Text</p>
-
-
-                    @{
-                if (!Convert.IsDBNull(@blogs.Picture))
-                {  <div>
-                    <img src="data:image;base64,@Convert.ToBase64String(@blogs.Picture)" style="margin-right: 310px; height:50px; width:50px" />
-                </div>
-                }
                     }
+                        }
 
-
-                    <div>
-                        <span>Likes: <a href="" style="color:green">@blogs.Like</a></span>
+                        <div>
+                            <span>Likes: <a href="" style="color:green">@blogs.Like</a></span>
+                        </div>
+                        <div style="text-align:left">
+                            @Html.ActionLink("#" + ss, "TagRedirect", "Home", new { id = ss }, new { id = ss })
+                        </div>
                     </div>
 
-                    <div style="text-align:left">
-                        @Html.ActionLink("#" + ss, "TagRedirect", "Home", new { id = ss }, new { id = ss })
-                    </div>
-
-                </div>
-
-        }
+                }
 
             }
 
