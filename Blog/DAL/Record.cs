@@ -13,10 +13,9 @@ namespace DAL
 {
     public class Recordd:IRecord
     {
-        public static string conStr=""; // = @"Data Source=(LocalDB)\v11.0;AttachDbFilename=d:\Distrib\Develop\DerfLer\Blog\Blog\App_Data\aspnet-Blog-20160526232425.mdf;Integrated Security=True";
+        public static string conStr=""; 
         
-
-        public Recordd()
+        static Recordd()
         {
             conStr = ConfigurationManager.ConnectionStrings["ConStr"].ConnectionString;
         }
@@ -171,7 +170,7 @@ namespace DAL
             }
         }
 
-        public bool Like(int ID)
+        public bool Like(int ID, bool flag, string Name)
         {
             int like = 0;
             using (SqlConnection connection = new SqlConnection(conStr))
@@ -190,10 +189,23 @@ namespace DAL
             {
                     SqlCommand command = new SqlCommand(@"Update records set [Like]=@Like where Id=@Id", connection);
                     command.Parameters.AddWithValue("@Id", ID);
-                    like++;
+                    if (flag == true)
+                    {
+                        like = like - 1;
+                        //необходимо сменить статус лайка на 0
+                        new DAL.Likerec().ChangeFlag(ID, Name);
+                    }
+                    else
+                    {
+                        like = like + 1;
+                        new DAL.Likerec().ChangeFlag(ID, Name);
+                    }
+
                     command.Parameters.AddWithValue("@Like", like);
                     connection.Open();
-                    return command.ExecuteNonQuery() == 1;               
+                    return command.ExecuteNonQuery() == 1;    
+           
+
             }
         }
 

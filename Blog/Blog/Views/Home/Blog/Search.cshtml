@@ -25,6 +25,10 @@
                     string nickanme = "";
                     nickanme = @blogs.Nick;
 
+
+                    string ID = "";
+                    ID = Convert.ToString(@blogs.Id);
+
                     <div style="margin-bottom: 5px; padding: 5px; background-color: #fff; border: solid 1px rgba(0, 0, 0, 0.22)">
                         <div>
                             <div style="float: left">@Html.ActionLink("@" + nickanme, "NameRedirect", "Home", new { id = nickanme }, new { id = nickanme })</div>
@@ -43,8 +47,9 @@
                         }
 
                         <div>
-                            <span>Likes: <a href="" style="color:green">@blogs.Like</a></span>
+                            <span>Likes: @blogs.Like</span>
                         </div>
+
                         <div style="text-align:left">
                             @Html.ActionLink("#" + ss, "TagRedirect", "Home", new { id = ss }, new { id = ss })
                         </div>

@@ -211,7 +211,19 @@ namespace Blog.Controllers
         {
             if (User.Identity.IsAuthenticated)
             {
-                new DAL.Recordd().Like(id);
+              bool isLike =  new DAL.Likerec().IsLike(id, User.Identity.Name);
+
+              if (isLike == false)
+              {
+                  new DAL.Recordd().Like(id, false, User.Identity.Name);
+              }
+
+              else
+              {
+                  new DAL.Recordd().Like(id, true, User.Identity.Name);
+              }
+
+
             }
 
             var tagDistinct = new Bll().GetDistinctTags().OrderBy(p => p);

@@ -20,7 +20,7 @@
 
 
     <div>
-        <h1 style="text-align:center"> @User.Identity.Name , добро пожаловать в комнату управления! </h1> 
+        <h1 style="text-align:center"> @User.Identity.Name.ToUpper() , добро пожаловать в комнату управления! </h1> 
     </div>
 
 
@@ -74,7 +74,7 @@
             }
 
             <div>
-                <span>Likes: <a href="" style="color:green">@blogs.Like</a></span>
+                <span>Likes: @blogs.Like</span>
             </div>
 
             <div style="text-align:left">
